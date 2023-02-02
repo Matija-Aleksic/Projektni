@@ -74,7 +74,7 @@
 90031=IO Exception: {0}; {1}
 90032=User {0} not found
 90033=User {0} already exists
-90034=Log file error: {0}, cause: {1}
+90034=Loger file error: {0}, cause: {1}
 90035=Sequence {0} already exists
 90036=Sequence {0} not found
 90037=View {0} not found

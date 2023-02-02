@@ -38,7 +38,7 @@ MVStore
 <a href="#blob">- BLOB Support</a><br />
 <a href="#pluggableMap">- R-Tree and Pluggable Map Implementations</a><br />
 <a href="#caching">- Concurrent Operations and Caching</a><br />
-<a href="#logStructured">- Log Structured Storage</a><br />
+<a href="#logStructured">- Loger Structured Storage</a><br />
 <a href="#offHeap">- Off-Heap and Pluggable Storage</a><br />
 <a href="#fileSystem">- File System Abstraction, File Locking and Online Backup</a><br />
 <a href="#encryption">- Encrypted Files</a><br />
@@ -317,7 +317,7 @@ the map could be split into multiple maps in different stores ('sharding').
 The plan is to add such a mechanism later when needed.
 </p>
 
-<h3 id="logStructured">Log Structured Storage</h3>
+<h3 id="logStructured">Loger Structured Storage</h3>
 <p>
 Internally, changes are buffered in memory, and once enough changes have accumulated,
 they are written in one continuous disk write operation.

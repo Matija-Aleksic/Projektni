@@ -74,7 +74,7 @@
 90031=Eingabe/Ausgabe: {0}; {1}
 90032=Benutzer {0} nicht gefunden
 90033=Benutzer {0} besteht bereits
-90034=Log Datei Fehler: {0}, Grund: {1}
+90034=Loger Datei Fehler: {0}, Grund: {1}
 90035=Sequenz {0} besteht bereits
 90036=Sequenz {0} nicht gefunden
 90037=View {0} nicht gefunden

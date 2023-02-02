@@ -37,7 +37,7 @@
          </GridPane.margin>
       </Label>
       <Label prefHeight="17.0" prefWidth="231.0" text="hint: postoje admin i korisnik" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#login" text="Log In" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#login" text="Loger In" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
       <TextField fx:id="username" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets />

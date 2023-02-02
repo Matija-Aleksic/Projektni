@@ -74,7 +74,7 @@
 90031=Exceção de IO: {0}; {1}
 90032=Usuário {0} não foi encontrado
 90033=Usuário {0} já existe
-90034=Erro no arquivo de Log: {0}, causa: {1}
+90034=Erro no arquivo de Loger: {0}, causa: {1}
 90035=Sequência {0} já existe
 90036=Sequência {0} não foi encontrada
 90037=Vista {0} não foi encontrada

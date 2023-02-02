@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-
 public class BazaPodataka {
 
     //-1 nije uspjesan login
@@ -16,7 +13,7 @@ public class BazaPodataka {
     //1 admin user
     public static int isAdmin=-1;
     private static final String DATABASE_FILE = "src/main/resources/Properties";
-    private static Connection connectToDatabase() throws SQLException, IOException {
+    private static Connection spajanjeNaBazu() throws SQLException, IOException {
         Properties svojstva = new Properties();
         svojstva.load(new FileReader(DATABASE_FILE));
         String urlBazePodataka = svojstva.getProperty("url");
@@ -28,7 +25,7 @@ public class BazaPodataka {
     }
 
     public static void ProvjeriDaliPostoji(String ime, String sifra) throws SQLException, IOException {
-        Connection connection = connectToDatabase();
+        Connection connection = spajanjeNaBazu();
         PreparedStatement statement = connection.prepareStatement("SELECT role FROM users WHERE username = ? and PASSWORD = ?");
         statement.setString(1,ime);
         statement.setString(2,sifra);

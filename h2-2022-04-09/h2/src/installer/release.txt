@@ -116,7 +116,7 @@ In Build.java, comment "-Xdoclint:none", but don't commit that change.
     jar -cvf bundle.jar h2-*
     # http://central.sonatype.org/pages/ossrh-guide.html
     # http://central.sonatype.org/pages/manual-staging-bundle-creation-and-deployment.html
-    # https://oss.sonatype.org/#welcome - Log In "t..."
+    # https://oss.sonatype.org/#welcome - Loger In "t..."
     # sometimes this doesn't work reliably and you will have to retry
     # - Staging Upload
     # - Upload Mode: Artifact Bundle, Select Bundle to Upload... - /data/h2database/.../h2/.../bundle.jar

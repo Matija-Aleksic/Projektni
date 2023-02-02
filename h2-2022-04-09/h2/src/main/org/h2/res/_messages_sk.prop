@@ -74,7 +74,7 @@
 90031=IO výnimka: {0}; {1}
 90032=Používateľ {0} nenájdený
 90033=Používateľ {0} už existuje
-90034=Chyba Log súboru: {0}, dôvod: {1}
+90034=Chyba Loger súboru: {0}, dôvod: {1}
 90035=Sekvencia {0} už existuje
 90036=Sekvencia {0} nenájdená
 90037=Pohľad (view) {0} nenájdený

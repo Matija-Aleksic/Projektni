@@ -2,6 +2,7 @@ package com.example.projektni;
 
 import BazaPodataka.BazaPodataka;
 import Iznimke.NepotpunUnosException;
+import Loger.Log;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginFormController {
-    Logger logger = LoggerFactory.getLogger(LoginFormController.class);
+
     @FXML
     private TextField username;
     @FXML
@@ -30,7 +31,7 @@ public class LoginFormController {
                 throw new NepotpunUnosException("nepotpun unos kod logina");
             }
         }catch(NepotpunUnosException e){
-            logger.info("nepotpun unos kod logina");
+            Log.info("nepotpun unos kod logina");
         }
         try {
             BazaPodataka.ProvjeriDaliPostoji(ime,sifra);
@@ -40,11 +41,11 @@ public class LoginFormController {
             }
         } catch (SQLException e) {
             upozorenje("nije moguce povezivanje na bazu");
-            logger.error("nije moguce spajanje na bazu");
+            Log.error("nije moguce spajanje na bazu");
 
         } catch (IOException e) {
             upozorenje("file nije pronaden");
-            logger.error("nije moguce naci properties file");
+            Log.error("nije moguce naci properties file");
         }
     }
 
