@@ -1,3 +1,5 @@
 url = jdbc:h2:tcp://localhost/~/projektni
 username = student
 password = student
+admin = $2a$10$aujPFZ8oupWA/aD1RhSji.eTQkDb.505xxtX7180zpgmCTjl2af7O
+korisnik = $2a$10$YVfqg9u1DjKThiLA/MM.te1GkSq8.eq6WW02.E9s/dcID/msJcOwm

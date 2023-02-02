@@ -7,13 +7,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class LoginFormController {
+    private static final String DATABASE_FILE = "src/main/resources/Properties";
 
     @FXML
     private TextField username;
@@ -23,30 +28,39 @@ public class LoginFormController {
     private Button LoginButton;
     @FXML
     private void login() throws NepotpunUnosException {
-        String ime=username.getText();
+        String ime = username.getText();
         String sifra = password.getText();
         try {
             if (sifra.isEmpty() || ime.isEmpty()) {
                 upozorenje("nepotpun unos");
                 throw new NepotpunUnosException("nepotpun unos kod logina");
             }
-        }catch(NepotpunUnosException e){
+        } catch (NepotpunUnosException e) {
             Log.info("nepotpun unos kod logina");
         }
+        String korisnikpass;
+        String adminpass;
         try {
-            BazaPodataka.ProvjeriDaliPostoji(ime,sifra);
-            if (BazaPodataka.isAdmin == 0 || BazaPodataka.isAdmin==1){
-                //otvori noi prozor
-                upozorenje("uspijeh");
-            }
-        } catch (SQLException e) {
-            upozorenje("nije moguce povezivanje na bazu");
-            Log.error("nije moguce spajanje na bazu");
-
+            Properties svojstva = new Properties();
+            svojstva.load(new FileReader(DATABASE_FILE));
+            adminpass = svojstva.getProperty("admin");
+            korisnikpass = svojstva.getProperty("korisnik");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            upozorenje("file nije pronaden");
-            Log.error("nije moguce naci properties file");
+            throw new RuntimeException(e);
         }
+        if (BCrypt.checkpw(sifra, korisnikpass)) {
+            System.out.println("Password matches korisnik");
+            BazaPodataka.isAdmin = 0;
+        } else if (BCrypt.checkpw(sifra, adminpass)){
+        BazaPodataka.isAdmin = 1;
+        System.out.println("Password matches admin");
+        }else{
+            System.out.println("Password does not match");
+        }
+
+
     }
 
     public static void upozorenje(String a) {
@@ -55,6 +69,7 @@ public class LoginFormController {
         alert.setHeaderText(a);
         alert.showAndWait();
     }
+
 
 
 }
