@@ -10,7 +10,11 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 public class BazaPodataka {
-    private static boolean isAdmin;
+
+    //-1 nije uspjesan login
+    //0 basic user
+    //1 admin user
+    public static int isAdmin=-1;
     private static final String DATABASE_FILE = "src/main/resources/Properties";
     private static Connection connectToDatabase() throws SQLException, IOException {
         Properties svojstva = new Properties();
@@ -32,9 +36,9 @@ public class BazaPodataka {
         if (rs.next()) {
             String role = rs.getString("role");
             if (role.equals("admin")) {
-                isAdmin = TRUE;
+                isAdmin = 1;
             } else {
-                isAdmin= FALSE;
+                isAdmin= 0;
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
