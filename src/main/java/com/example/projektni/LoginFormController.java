@@ -27,7 +27,7 @@ public class LoginFormController {
     @FXML
     private Button LoginButton;
     @FXML
-    private void login() throws NepotpunUnosException {
+    private void login() throws NepotpunUnosException, IOException {
         String ime = username.getText();
         String sifra = password.getText();
         try {
@@ -50,13 +50,18 @@ public class LoginFormController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //nije radilo sa statickim metodama, pogotovo kad u sam dodavao metode u menuitem
+        IzbornikController a = new IzbornikController();
         if (BCrypt.checkpw(sifra, korisnikpass)) {
             System.out.println("Password matches korisnik");
             BazaPodataka.isAdmin = 0;
-        } else if (BCrypt.checkpw(sifra, adminpass)){
-        BazaPodataka.isAdmin = 1;
-        System.out.println("Password matches admin");
-        }else{
+            a.pregledScreen();
+        } else if (BCrypt.checkpw(sifra, adminpass)) {
+            BazaPodataka.isAdmin = 1;
+            System.out.println("Password matches admin");
+            a.pregledScreen();
+        } else {
+            upozorenje("krivi username ili sifra");
             System.out.println("Password does not match");
         }
 
@@ -69,6 +74,8 @@ public class LoginFormController {
         alert.setHeaderText(a);
         alert.showAndWait();
     }
+
+
 
 
 

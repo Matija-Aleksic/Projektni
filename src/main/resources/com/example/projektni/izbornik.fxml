@@ -5,24 +5,25 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="0.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projektni.IzbornikController">
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="Pregled">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#pregledScreen" text="vidi pregled" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Sisavci" />
-                  <MenuItem mnemonicParsing="false" text="Ribe" />
-                  <MenuItem mnemonicParsing="false" text="Kukci" />
-                  <MenuItem mnemonicParsing="false" text="Ptice" />
-            </items>
-          </Menu>
+            <Menu mnemonicParsing="false" text="Promjene">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Vidi promjene" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Log Off">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#loginScreen" text="Log off" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
    </children>

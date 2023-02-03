@@ -5,13 +5,13 @@ public abstract class KopneneZivotinje {
     private Prehrana hrana;
     private Staniste staniste;
     private int tezina;
-    private int brojNogu;
+    private int brojnogu;
 
-    public KopneneZivotinje(String ime, Prehrana hrana, Staniste staniste, int tezina, int brojNogu) {
+    public KopneneZivotinje(String ime, Prehrana hrana, Staniste staniste, int tezina, int brojnogu) {
         this.ime = ime;
         this.hrana = hrana;
         this.staniste = staniste;
         this.tezina = tezina;
-        this.brojNogu = brojNogu;
+        this.brojnogu = brojnogu;
     }
 }
