@@ -15,7 +15,7 @@ public class IzbornikController {
         HelloApplication.getMainStage().show();
     }
     public void pregledScreen() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PretragaKopnene.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PretragaSisavac.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         HelloApplication.getMainStage().setTitle("Hello!");
         HelloApplication.getMainStage().setScene(scene);

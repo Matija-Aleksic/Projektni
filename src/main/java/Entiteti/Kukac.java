@@ -5,14 +5,13 @@ import Loger.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-    public class Kukac extends KopneneZivotinje{
+    public class Kukac extends Zivotinja{
         private int brojOciju;
 
 
-        public Kukac(String ime, Prehrana hrana, Staniste staniste, int tezina, int brojnogu) {
-            super(ime, hrana, staniste, tezina, brojnogu);
+        public Kukac(String ime, Prehrana hrana, Staniste staniste, int tezina, int brojOciju) {
+            super(ime, hrana, staniste, tezina);
             this.brojOciju = brojOciju;
-            Log.info("Stvoren novi kukac " + ime);
         }
     }
 
