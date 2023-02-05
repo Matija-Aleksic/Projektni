@@ -14,8 +14,15 @@ public class IzbornikController {
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
-    public void pregledScreen() throws IOException {
+    public void pregledSisavacScreen() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PretragaSisavac.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        HelloApplication.getMainStage().setTitle("Hello!");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }
+    public void editSisavacScreen() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("EditSisavac.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         HelloApplication.getMainStage().setTitle("Hello!");
         HelloApplication.getMainStage().setScene(scene);

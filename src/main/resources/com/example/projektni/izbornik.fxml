@@ -11,7 +11,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Pregled">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#pregledScreen" text="vidi pregled" />
+              <MenuItem mnemonicParsing="false" onAction="#pregledSisavacScreen" text="vidi pregled" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Promjene">

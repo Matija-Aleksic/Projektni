@@ -8,14 +8,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import org.mindrot.jbcrypt.BCrypt;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Properties;
+
+
 
 public class LoginFormController {
     private static final String DATABASE_FILE = "src/main/resources/Properties";
@@ -55,11 +54,12 @@ public class LoginFormController {
         if (BCrypt.checkpw(sifra, korisnikpass)) {
             System.out.println("Password matches korisnik");
             BazaPodataka.isAdmin = 0;
-            a.pregledScreen();
+            //todo admin privilegije na editu i brisanju ugl samo if() i ak nije popup da nemamo privilegiju
+            a.pregledSisavacScreen();
         } else if (BCrypt.checkpw(sifra, adminpass)) {
             BazaPodataka.isAdmin = 1;
             System.out.println("Password matches admin");
-            a.pregledScreen();
+            a.pregledSisavacScreen();
         } else {
             upozorenje("krivi username ili sifra");
             System.out.println("Password does not match");

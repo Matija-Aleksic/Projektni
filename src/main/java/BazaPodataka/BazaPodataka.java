@@ -1,9 +1,15 @@
 package BazaPodataka;
+import Entiteti.Prehrana;
+import Entiteti.Sisavci;
+import Entiteti.Staniste;
 import javafx.scene.control.Alert;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 public class BazaPodataka {
@@ -13,7 +19,7 @@ public class BazaPodataka {
     //1 admin user
     public static int isAdmin=-1;
     private static final String DATABASE_FILE = "src/main/resources/Properties";
-    private static Connection spajanjeNaBazu() throws SQLException, IOException {
+    public static Connection spajanjeNaBazu() throws SQLException, IOException {
         Properties svojstva = new Properties();
         svojstva.load(new FileReader(DATABASE_FILE));
         String urlBazePodataka = svojstva.getProperty("url");
@@ -44,4 +50,64 @@ public class BazaPodataka {
 //            alert.showAndWait();
 //        }
 //    }
+
+    public static List<Sisavci> dohvatiSisavce(String ime, Prehrana hrana, Staniste staniste, float tezina, String bojaKrzna) throws SQLException, IOException {
+        List<Sisavci> lista = new ArrayList<>();
+        Connection veza = spajanjeNaBazu();
+        String upit ="SELECT * FROM SISAVCI WHERE 1=1 ";
+        if (ime.contains("null")==false){
+            upit += "AND IME = '" +ime+"' ";
+        }
+        if (Optional.ofNullable(hrana).isPresent()) {
+            upit+="AND PREHRANA = '"+hrana.toString()+ "'";
+        }
+        if (Optional.ofNullable(staniste).isPresent()) {
+            upit+="AND STANISTE = '"+staniste.toString()+ "'";
+        }
+        if (tezina!=0) {
+            upit+="AND TEZINA = "+ tezina ;
+        }
+        if (bojaKrzna.contains("null")==false) {
+            upit+="AND BOJAKRZNA = '"+bojaKrzna+ "'";
+        }
+        System.out.println(upit);
+        Statement a= veza.createStatement();
+        ResultSet resultSet = a.executeQuery(upit);
+        while (resultSet.next()) {
+        String imena =resultSet.getString("ime");
+        Prehrana prehrana= Prehrana.valueOf(resultSet.getString("prehrana"));
+        Staniste staniste1= Staniste.valueOf(resultSet.getString("staniste"));
+        float tezina1= Float.parseFloat(resultSet.getString("tezina"));
+        String bojakrzna1= resultSet.getString("bojakrzna");
+        Sisavci noviSisavac = new Sisavci(imena, prehrana, staniste1, tezina1, bojakrzna1);
+        lista.add(noviSisavac);
+        }
+        return lista;
+    }
+
+
+
+    public static void obrisi(Sisavci sisavci) throws SQLException, IOException {
+        //todo napravit ak ne postoji zivotinja i spremanje promjene u binarnu datoteku
+
+        Connection veza= spajanjeNaBazu();
+        PreparedStatement statement = veza.prepareStatement("DELETE FROM SISAVCI WHERE IME = ?");
+        statement.setString(1, sisavci.getIme());
+        statement.execute();
+
+
+    }
+
+    public static void editSisavac(Sisavci stari, Sisavci novi) throws SQLException, IOException {
+        Connection veza = spajanjeNaBazu();
+        PreparedStatement preparedStatement = veza.prepareStatement("UPDATE SISAVCI SET IME = ?, PREHRANA = ? ,STANISTE = ? ,TEZINA = ?, BOJAKRZNA = ? WHERE IME = ?");
+        preparedStatement.setString(1, novi.getIme());
+        preparedStatement.setString(2,novi.getHrana().toString());
+        preparedStatement.setString(3,novi.getStaniste().toString());
+        preparedStatement.setString(4,novi.getTezinaString());
+        preparedStatement.setString(5, novi.getBojaKrzna());
+        preparedStatement.setString(6,stari.getIme());
+        preparedStatement.execute();
+        System.out.println("updated sisavac");
+    }
 }
