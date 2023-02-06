@@ -52,7 +52,7 @@ public class PretragaSisavacController {
 
         stanistechoiceBox.getItems().add("Grad");
         stanistechoiceBox.getItems().add("More");
-        stanistechoiceBox.getItems().add("RijekaIJezera");
+        stanistechoiceBox.getItems().add("RijekaiJezera");
         stanistechoiceBox.getItems().add("Planina");
         stanistechoiceBox.getItems().add("Suma");
         stanistechoiceBox.getItems().add("Mocvara");

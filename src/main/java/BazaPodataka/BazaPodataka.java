@@ -1,8 +1,5 @@
 package BazaPodataka;
-import Entiteti.Prehrana;
-import Entiteti.Ptice;
-import Entiteti.Sisavci;
-import Entiteti.Staniste;
+import Entiteti.*;
 import javafx.scene.control.Alert;
 
 import java.io.FileReader;
@@ -129,7 +126,7 @@ public class BazaPodataka {
             upit+="AND TEZINA = "+ tezina ;
         }
         if (rasponKrila!=0) {
-            upit+="AND BOJAKRZNA = '"+rasponKrila+ "'";
+            upit+="AND RASPONKRILA = '"+rasponKrila+ "'";
         }
         System.out.println(upit);
         Statement a= veza.createStatement();
@@ -168,6 +165,66 @@ public class BazaPodataka {
             preparedStatement.setString(6,stari.getIme());
             preparedStatement.execute();
             System.out.println("updated ptica");
+
+
+    }
+
+    public static List<Ribe> dohvatiRibe(String ime, Prehrana hrana, Staniste staniste, float tezina, Voda voda) throws SQLException, IOException {
+        List<Ribe> lista = new ArrayList<>();
+        Connection veza = spajanjeNaBazu();
+        String upit ="SELECT * FROM RIBE WHERE 1=1 ";
+        if (ime.contains("null")==false){
+            upit += "AND IME = '" +ime+"' ";
+        }
+        if (Optional.ofNullable(hrana).isPresent()) {
+            upit+="AND PREHRANA = '"+hrana.toString()+ "'";
+        }
+        if (Optional.ofNullable(staniste).isPresent()) {
+            upit+="AND STANISTE = '"+staniste.toString()+ "'";
+        }
+        if (tezina!=0) {
+            upit+="AND TEZINA = "+ tezina ;
+        }
+        if (Optional.ofNullable(voda).isPresent()) {
+            upit+="AND VODA = '"+voda.toString()+ "'";
+        }
+        System.out.println(upit);
+        Statement a= veza.createStatement();
+        ResultSet resultSet = a.executeQuery(upit);
+        while (resultSet.next()) {
+            String imena =resultSet.getString("ime");
+            Prehrana prehrana= Prehrana.valueOf(resultSet.getString("prehrana"));
+            Staniste staniste1= Staniste.More;
+            float tezina1= Float.parseFloat(resultSet.getString("tezina"));
+            Voda voda1= Voda.valueOf(resultSet.getString("Voda"));
+            Ribe novariba = new Ribe(imena, prehrana, staniste1, tezina1, voda1);
+            lista.add(novariba);
+        }
+        return lista;
+    }
+
+    public static void obrisiRibu(Ribe riba) throws SQLException, IOException {
+
+        //todo napravit ak ne postoji zivotinja i spremanje promjene u binarnu datoteku
+        Connection veza= spajanjeNaBazu();
+        PreparedStatement statement = veza.prepareStatement("DELETE FROM RIBE WHERE IME = ?");
+        statement.setString(1, riba.getIme());
+        statement.execute();
+
+    }
+
+    public static void editRiba(Ribe stari, Ribe novi) throws SQLException, IOException {
+
+        Connection veza = spajanjeNaBazu();
+        PreparedStatement preparedStatement = veza.prepareStatement("UPDATE RIBE SET IME = ?, PREHRANA = ? ,STANISTE = ? ,TEZINA = ?, VODA = ? WHERE IME = ?");
+        preparedStatement.setString(1, novi.getIme());
+        preparedStatement.setString(2,novi.getHrana().toString());
+        preparedStatement.setString(3,novi.getStaniste().toString());
+        preparedStatement.setString(4,novi.getTezinaString());
+        preparedStatement.setString(5, novi.getVoda().toString());
+        preparedStatement.setString(6,stari.getIme());
+        preparedStatement.execute();
+        System.out.println("updated riba");
 
 
     }

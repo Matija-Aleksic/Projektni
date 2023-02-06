@@ -13,6 +13,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#pregledSisavacScreen" text="pregled Sisavaca" />
                   <MenuItem mnemonicParsing="false" onAction="#pregledPticaScreen" text="pregled Ptica" />
+                  <MenuItem mnemonicParsing="false" onAction="#pregledRibaScreen" text="pregled Riba" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Promjene">

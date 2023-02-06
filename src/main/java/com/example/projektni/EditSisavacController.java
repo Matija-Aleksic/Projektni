@@ -42,7 +42,7 @@ public class EditSisavacController {
 
         stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
-        stanistechoiceBox.getItems().add(Staniste.valueOf("RijekaIJezera"));
+        stanistechoiceBox.getItems().add(Staniste.valueOf("RijekaiJezera"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("Planina"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));

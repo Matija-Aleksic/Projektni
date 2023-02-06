@@ -1,10 +1,7 @@
 package com.example.projektni;
 
 import BazaPodataka.BazaPodataka;
-import Entiteti.Prehrana;
-import Entiteti.Ptice;
-import Entiteti.Sisavci;
-import Entiteti.Staniste;
+import Entiteti.*;
 import Iznimke.NepotpunUnosException;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -15,19 +12,19 @@ import java.sql.SQLException;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
-public class EditPticaController {
-    public static Ptice stari;
-    Ptice novi;
+public class EditRibaController {
+    public static Ribe stari;
+    Ribe novi;
 
     @FXML
     private TextField imeTextfield;
     @FXML private ChoiceBox<Prehrana> prehranachoiceBox;
     @FXML private ChoiceBox<Staniste> stanistechoiceBox;
     @FXML private TextField tezinaTextfield;
-    @FXML private TextField rasponkrilaTextfield;
+    @FXML private ChoiceBox<Voda> vodaChoiceBox;
 
     private String ime1;
-    private String rasponkrila1;
+    private Voda voda1;
     private float tezina1;
     private Prehrana hrana1;
     private Staniste staniste1;
@@ -51,7 +48,9 @@ public class EditPticaController {
 
         tezinaTextfield.setText(String.valueOf(stari.getTezina()));
 
-        rasponkrilaTextfield.setText(stari.getSirinaKrila());
+        vodaChoiceBox.getItems().add(Voda.valueOf("Slatkovodno"));
+        vodaChoiceBox.getItems().add(Voda.valueOf("Morsko"));
+        vodaChoiceBox.setValue(stari.getVoda());
 
     }
 
@@ -60,23 +59,23 @@ public class EditPticaController {
 
         try {
             ime1=imeTextfield.getText();
-            rasponkrila1= (rasponkrilaTextfield.getText());
+            voda1= (vodaChoiceBox.getValue());
             tezina1=Float.parseFloat(tezinaTextfield.getText());
             hrana1=prehranachoiceBox.getValue();
             staniste1=stanistechoiceBox.getValue();
             if (ime1.isEmpty() ||tezinaTextfield.getText().isEmpty()){
-                throw new NepotpunUnosException("nepotpun unos kod edita ptica");
+                throw new NepotpunUnosException("nepotpun unos kod edita ribe");
             }else {
-                novi= new Ptice(ime1,hrana1,staniste1, (int) tezina1,rasponkrila1);
+                novi= new Ribe(ime1,hrana1,staniste1,tezina1,voda1);
             }
 
         } catch (NumberFormatException e) {
             upozorenje("nepotpun unos");
-            System.out.println("nepotpun unos");;
+            System.out.println("nepotpun unos kod edita");;
         } catch (NepotpunUnosException e ) {
             throw new RuntimeException(e);
         }
-        BazaPodataka.editPtica(stari,novi);
+        BazaPodataka.editRiba(stari,novi);
         upozorenje("uspjesno");
 
         //todo zapis u serijalizirani file promjenu
@@ -85,7 +84,6 @@ public class EditPticaController {
     }
     public void nazad() throws IOException {
         IzbornikController a= new IzbornikController();
-        a.pregledPticaScreen();
+        a.pregledRibaScreen();
     }
-
 }

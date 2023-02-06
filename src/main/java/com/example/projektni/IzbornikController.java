@@ -37,8 +37,24 @@ public class IzbornikController {
         HelloApplication.getMainStage().setTitle("Hello!");
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
-    }    public void editPticaScreen() throws IOException {
+    }
+    public void editPticaScreen() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("EditPtica.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        HelloApplication.getMainStage().setTitle("Hello!");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }
+
+    public void pregledRibaScreen() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PretragaRiba.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        HelloApplication.getMainStage().setTitle("Hello!");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }
+    public void editRibaScreen() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("EditRiba.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         HelloApplication.getMainStage().setTitle("Hello!");
         HelloApplication.getMainStage().setScene(scene);

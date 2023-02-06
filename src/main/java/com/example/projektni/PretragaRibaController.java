@@ -2,9 +2,9 @@ package com.example.projektni;
 
 import BazaPodataka.BazaPodataka;
 import Entiteti.Prehrana;
-import Entiteti.Ptice;
-import Entiteti.Sisavci;
+import Entiteti.Ribe;
 import Entiteti.Staniste;
+import Entiteti.Voda;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -17,58 +17,60 @@ import java.util.List;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
-public class PretragaPticaController {
+public class PretragaRibaController {
     @FXML
     private ChoiceBox<String> prehranachoiceBox;
     @FXML private ChoiceBox<String> stanistechoiceBox;
     @FXML private Button izmijeniButton;
     @FXML private Button obrisiButton;
-    @FXML private TableView<Ptice> pticeTableView;
-    @FXML private TableColumn<Ptice,String> imeTableColumn;
-    @FXML private TableColumn<Ptice,String> prehranaTableColumn;
-    @FXML private TableColumn<Ptice,String> stanisteTableColumn;
-    @FXML private TableColumn<Ptice,String> tezinaTableColumn;
-    @FXML private TableColumn<Ptice,String> rasponKrilaTableColumn;
+    @FXML private TableView<Ribe> ribeTableView;
+    @FXML private TableColumn<Ribe,String> imeTableColumn;
+    @FXML private TableColumn<Ribe,String> prehranaTableColumn;
+    @FXML private TableColumn<Ribe,String> stanisteTableColumn;
+    @FXML private TableColumn<Ribe,String> tezinaTableColumn;
+    @FXML private TableColumn<Ribe,String> vodaTableColumn;
     @FXML private TextField imeTextField;
     @FXML private TextField tezinaTextField;
-    @FXML private TextField sirinakrilaTextField;
+    @FXML private ChoiceBox<String> vodaChoiceBox;
     public void initialize() throws SQLException, IOException {
-        List<Ptice> popis = new ArrayList<>();
-        popis= BazaPodataka.dohvatiptice("null",null,null,0,0);
+        List<Ribe> popis = new ArrayList<>();
+        popis= BazaPodataka.dohvatiRibe("null",null,null,0,null);
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
         prehranaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHrana().toString()));
         stanisteTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStaniste().toString()));
         tezinaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTezinaString()));
-        rasponKrilaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSirinaKrila()));
-        pticeTableView.setItems(FXCollections.observableList(popis));
+        vodaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVoda().toString()));
+        ribeTableView.setItems(FXCollections.observableList(popis));
 
-        prehranachoiceBox.getItems().add("Biljojed");
-        prehranachoiceBox.getItems().add("Mesojed");
-        prehranachoiceBox.getItems().add("Svejed");
-        prehranachoiceBox.getItems().add("");
-        prehranachoiceBox.setValue("");
+        prehranachoiceBox.getItems().add(("Biljojed"));
+        prehranachoiceBox.getItems().add(("Mesojed"));
+        prehranachoiceBox.getItems().add(("Svejed"));
+        prehranachoiceBox.getItems().add((""));
+        prehranachoiceBox.setValue((""));
 
-        stanistechoiceBox.getItems().add("Grad");
         stanistechoiceBox.getItems().add("More");
         stanistechoiceBox.getItems().add("RijekaiJezera");
-        stanistechoiceBox.getItems().add("Planina");
-        stanistechoiceBox.getItems().add("Suma");
         stanistechoiceBox.getItems().add("Mocvara");
         stanistechoiceBox.getItems().add("VodenaStanista");
         stanistechoiceBox.getItems().add("");
         stanistechoiceBox.setValue("");
 
+        vodaChoiceBox.getItems().add("Slatkovodno");
+        vodaChoiceBox.getItems().add("Morsko");
+        vodaChoiceBox.getItems().add("");
+        vodaChoiceBox.setValue("");
+
     }
     public void Obrisi() throws SQLException, IOException {
 
         if (BazaPodataka.isAdmin==1){
-            Ptice ptice= pticeTableView.getSelectionModel().getSelectedItem();
-            BazaPodataka.obrisiptice(ptice);
+            Ribe ribe= ribeTableView.getSelectionModel().getSelectedItem();
+            BazaPodataka.obrisiRibu(ribe);
             LoginFormController.upozorenje("uspjesno");
-            List<Ptice>temp;
+            List<Ribe>temp;
             //da se refresha
-            temp=BazaPodataka.dohvatiptice("null",null,null,0,0);
-            pticeTableView.setItems(FXCollections.observableList(temp));
+            temp=BazaPodataka.dohvatiRibe("null",null,null,0,null);
+            ribeTableView.setItems(FXCollections.observableList(temp));
         }else {
             upozorenje("nemate admin privilegije");
         }
@@ -79,19 +81,19 @@ public class PretragaPticaController {
         if (BazaPodataka.isAdmin==1){
             IzbornikController a = new IzbornikController();
 
-            if (pticeTableView.getSelectionModel().isEmpty()){
+            if (ribeTableView.getSelectionModel().isEmpty()){
                 upozorenje("nije odabrana zivotinja");
             }else{
-                EditPticaController.stari= pticeTableView.getSelectionModel().getSelectedItem();
+                EditRibaController.stari= ribeTableView.getSelectionModel().getSelectedItem();
             }
-            a.editPticaScreen();
+            a.editRibaScreen();
         }else {
             upozorenje("nemate admin privilegije");
         }
     }
     public void pretraga() throws SQLException, IOException {
         String ime = "null";
-        int sirinakrila=0;
+        Voda voda = null;
         Prehrana prehrana = null;
         Staniste staniste= null;
         if (!imeTextField.getText().isEmpty()) {
@@ -102,8 +104,8 @@ public class PretragaPticaController {
             tezina = Float.parseFloat(tezinaTextField.getText());
         }
 
-        if (!sirinakrilaTextField.getText().isEmpty()) {
-            sirinakrila = Integer.parseInt(sirinakrilaTextField.getText());
+        if (vodaChoiceBox.getValue() != "") {
+            voda = Voda.valueOf(vodaChoiceBox.getValue());
         }
         if (prehranachoiceBox.getValue()!=""){
             prehrana= Prehrana.valueOf(prehranachoiceBox.getValue());
@@ -111,11 +113,10 @@ public class PretragaPticaController {
         if (stanistechoiceBox.getValue() !="") {
             staniste= Staniste.valueOf(stanistechoiceBox.getValue());
         }
-        List<Ptice> temp = new ArrayList<>();
-        temp= BazaPodataka.dohvatiptice(ime,prehrana,staniste,tezina, sirinakrila);
-        pticeTableView.setItems(FXCollections.observableList(temp));
+        List<Ribe> temp = new ArrayList<>();
+        temp= BazaPodataka.dohvatiRibe(ime,prehrana,staniste,tezina, voda);
+        ribeTableView.setItems(FXCollections.observableList(temp));
     }
-
 
 
 }
