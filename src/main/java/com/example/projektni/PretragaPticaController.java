@@ -1,48 +1,46 @@
 package com.example.projektni;
 
-
 import BazaPodataka.BazaPodataka;
 import Entiteti.Prehrana;
+import Entiteti.Ptice;
 import Entiteti.Sisavci;
 import Entiteti.Staniste;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
-
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
-public class PretragaSisavacController {
-    @FXML private ChoiceBox<String> prehranachoiceBox;
+public class PretragaPticaController {
+    @FXML
+    private ChoiceBox<String> prehranachoiceBox;
     @FXML private ChoiceBox<String> stanistechoiceBox;
     @FXML private Button izmijeniButton;
     @FXML private Button obrisiButton;
-    @FXML private   TableView<Sisavci> SisavciTableView;
-    @FXML private TableColumn<Sisavci,String> imeTableColumn;
-    @FXML private TableColumn<Sisavci,String> prehranaTableColumn;
-    @FXML private TableColumn<Sisavci,String> stanisteTableColumn;
-    @FXML private TableColumn<Sisavci,String> tezinaTableColumn;
-    @FXML private TableColumn<Sisavci,String> bojaKrznaTableColumn;
+    @FXML private TableView<Ptice> pticeTableView;
+    @FXML private TableColumn<Ptice,String> imeTableColumn;
+    @FXML private TableColumn<Ptice,String> prehranaTableColumn;
+    @FXML private TableColumn<Ptice,String> stanisteTableColumn;
+    @FXML private TableColumn<Ptice,String> tezinaTableColumn;
+    @FXML private TableColumn<Ptice,String> rasponKrilaTableColumn;
     @FXML private TextField imeTextField;
     @FXML private TextField tezinaTextField;
-    @FXML private TextField bojaKrznaTextField;
+    @FXML private TextField sirinakrilaTextField;
     public void initialize() throws SQLException, IOException {
-        List<Sisavci> popis = new ArrayList<>();
-        popis=BazaPodataka.dohvatiSisavce("null",null,null,0,"null");
+        List<Ptice> popis = new ArrayList<>();
+        popis= BazaPodataka.dohvatiptice("null",null,null,0,0);
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
         prehranaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHrana().toString()));
         stanisteTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStaniste().toString()));
         tezinaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTezinaString()));
-        bojaKrznaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBojaKrzna()));
-        SisavciTableView.setItems(FXCollections.observableList(popis));
+        rasponKrilaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSirinaKrila()));
+        pticeTableView.setItems(FXCollections.observableList(popis));
 
         prehranachoiceBox.getItems().add("Biljojed");
         prehranachoiceBox.getItems().add("Mesojed");
@@ -64,30 +62,36 @@ public class PretragaSisavacController {
     public void Obrisi() throws SQLException, IOException {
 
         if (BazaPodataka.isAdmin==1){
-            Sisavci sisavci= SisavciTableView.getSelectionModel().getSelectedItem();
-            BazaPodataka.obrisi(sisavci);
+            Ptice ptice= pticeTableView.getSelectionModel().getSelectedItem();
+            BazaPodataka.obrisiptice(ptice);
             LoginFormController.upozorenje("uspjesno");
-            List<Sisavci>temp;
+            List<Ptice>temp;
             //da se refresha
-            temp=BazaPodataka.dohvatiSisavce("null",null,null,0,"null");
-            SisavciTableView.setItems(FXCollections.observableList(temp));
+            temp=BazaPodataka.dohvatiptice("null",null,null,0,0);
+            pticeTableView.setItems(FXCollections.observableList(temp));
         }else {
             upozorenje("nemate admin privilegije");
         }
 
     }
+
     public void Izmijeni() throws IOException {
         if (BazaPodataka.isAdmin==1){
             IzbornikController a = new IzbornikController();
-            EditSisavacController.stari=SisavciTableView.getSelectionModel().getSelectedItem();
-            a.editSisavacScreen();
+
+            if (pticeTableView.getSelectionModel().isEmpty()){
+                upozorenje("nije odabrana zivotinja");
+            }else{
+                EditPticaController.stari= pticeTableView.getSelectionModel().getSelectedItem();
+            }
+            a.editPticaScreen();
         }else {
             upozorenje("nemate admin privilegije");
         }
     }
     public void pretraga() throws SQLException, IOException {
         String ime = "null";
-        String bojaKrzna="null";
+        int sirinakrila=0;
         Prehrana prehrana = null;
         Staniste staniste= null;
         if (!imeTextField.getText().isEmpty()) {
@@ -98,8 +102,8 @@ public class PretragaSisavacController {
             tezina = Float.parseFloat(tezinaTextField.getText());
         }
 
-        if (!bojaKrznaTextField.getText().isEmpty()) {
-            bojaKrzna = bojaKrznaTextField.getText();
+        if (!sirinakrilaTextField.getText().isEmpty()) {
+            sirinakrila = Integer.parseInt(sirinakrilaTextField.getText());
         }
         if (prehranachoiceBox.getValue()!=""){
             prehrana= Prehrana.valueOf(prehranachoiceBox.getValue());
@@ -107,9 +111,9 @@ public class PretragaSisavacController {
         if (stanistechoiceBox.getValue() !="") {
             staniste= Staniste.valueOf(stanistechoiceBox.getValue());
         }
-        List<Sisavci> temp = new ArrayList<>();
-        temp= BazaPodataka.dohvatiSisavce(ime,prehrana,staniste,tezina,bojaKrzna);
-        SisavciTableView.setItems(FXCollections.observableList(temp));
+        List<Ptice> temp = new ArrayList<>();
+        temp= BazaPodataka.dohvatiptice(ime,prehrana,staniste,tezina, sirinakrila);
+        pticeTableView.setItems(FXCollections.observableList(temp));
     }
 
 

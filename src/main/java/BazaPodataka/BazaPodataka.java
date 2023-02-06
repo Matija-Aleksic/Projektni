@@ -1,5 +1,6 @@
 package BazaPodataka;
 import Entiteti.Prehrana;
+import Entiteti.Ptice;
 import Entiteti.Sisavci;
 import Entiteti.Staniste;
 import javafx.scene.control.Alert;
@@ -109,5 +110,65 @@ public class BazaPodataka {
         preparedStatement.setString(6,stari.getIme());
         preparedStatement.execute();
         System.out.println("updated sisavac");
+    }
+
+    public static List<Ptice> dohvatiptice(String ime, Prehrana hrana, Staniste staniste, float tezina, int rasponKrila) throws SQLException, IOException {
+        List<Ptice> lista = new ArrayList<>();
+        Connection veza = spajanjeNaBazu();
+        String upit ="SELECT * FROM ptice WHERE 1=1 ";
+        if (ime.contains("null")==false){
+            upit += "AND IME = '" +ime+"' ";
+        }
+        if (Optional.ofNullable(hrana).isPresent()) {
+            upit+="AND PREHRANA = '"+hrana.toString()+ "'";
+        }
+        if (Optional.ofNullable(staniste).isPresent()) {
+            upit+="AND STANISTE = '"+staniste.toString()+ "'";
+        }
+        if (tezina!=0) {
+            upit+="AND TEZINA = "+ tezina ;
+        }
+        if (rasponKrila!=0) {
+            upit+="AND BOJAKRZNA = '"+rasponKrila+ "'";
+        }
+        System.out.println(upit);
+        Statement a= veza.createStatement();
+        ResultSet resultSet = a.executeQuery(upit);
+        while (resultSet.next()) {
+            String imena =resultSet.getString("ime");
+            Prehrana prehrana= Prehrana.valueOf(resultSet.getString("prehrana"));
+            Staniste staniste1= Staniste.valueOf(resultSet.getString("staniste"));
+            float tezina1= Float.parseFloat(resultSet.getString("tezina"));
+            String rasponkrila= resultSet.getString("rasponkrila");
+            Ptice novaPtica = new Ptice(imena, prehrana, staniste1, (int) tezina1, rasponkrila);
+            lista.add(novaPtica);
+        }
+        return lista;
+    }
+
+    public static void obrisiptice(Ptice ptice) throws SQLException, IOException {
+
+            //todo napravit ak ne postoji zivotinja i spremanje promjene u binarnu datoteku
+            Connection veza= spajanjeNaBazu();
+            PreparedStatement statement = veza.prepareStatement("DELETE FROM Ptice WHERE IME = ?");
+            statement.setString(1, ptice.getIme());
+            statement.execute();
+
+    }
+
+    public static void editPtica(Ptice stari, Ptice novi) throws SQLException, IOException {
+
+            Connection veza = spajanjeNaBazu();
+            PreparedStatement preparedStatement = veza.prepareStatement("UPDATE PTICE SET IME = ?, PREHRANA = ? ,STANISTE = ? ,TEZINA = ?, RASPONKRILA = ? WHERE IME = ?");
+            preparedStatement.setString(1, novi.getIme());
+            preparedStatement.setString(2,novi.getHrana().toString());
+            preparedStatement.setString(3,novi.getStaniste().toString());
+            preparedStatement.setString(4,novi.getTezinaString());
+            preparedStatement.setString(5, novi.getSirinaKrila());
+            preparedStatement.setString(6,stari.getIme());
+            preparedStatement.execute();
+            System.out.println("updated ptica");
+
+
     }
 }

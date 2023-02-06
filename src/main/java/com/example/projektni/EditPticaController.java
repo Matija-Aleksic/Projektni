@@ -2,6 +2,7 @@ package com.example.projektni;
 
 import BazaPodataka.BazaPodataka;
 import Entiteti.Prehrana;
+import Entiteti.Ptice;
 import Entiteti.Sisavci;
 import Entiteti.Staniste;
 import Iznimke.NepotpunUnosException;
@@ -10,24 +11,23 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
-public class EditSisavacController {
-    public static Sisavci stari;
-    Sisavci novi;
+public class EditPticaController {
+    public static Ptice stari;
+    Ptice novi;
 
-    @FXML private TextField imeTextfield;
+    @FXML
+    private TextField imeTextfield;
     @FXML private ChoiceBox<Prehrana> prehranachoiceBox;
     @FXML private ChoiceBox<Staniste> stanistechoiceBox;
     @FXML private TextField tezinaTextfield;
-    @FXML private TextField bojaKrznaTextfield;
+    @FXML private TextField rasponkrilaTextfield;
 
     private String ime1;
-    private String bojaKrzna1;
+    private String rasponkrila1;
     private float tezina1;
     private Prehrana hrana1;
     private Staniste staniste1;
@@ -51,7 +51,7 @@ public class EditSisavacController {
 
         tezinaTextfield.setText(String.valueOf(stari.getTezina()));
 
-        bojaKrznaTextfield.setText(stari.getBojaKrzna());
+        rasponkrilaTextfield.setText(stari.getSirinaKrila());
 
     }
 
@@ -60,14 +60,14 @@ public class EditSisavacController {
 
         try {
             ime1=imeTextfield.getText();
-            bojaKrzna1= bojaKrznaTextfield.getText();
+            rasponkrila1= (rasponkrilaTextfield.getText());
             tezina1=Float.parseFloat(tezinaTextfield.getText());
             hrana1=prehranachoiceBox.getValue();
             staniste1=stanistechoiceBox.getValue();
-            if (ime1.isEmpty()||bojaKrzna1.isEmpty()||tezinaTextfield.getText().isEmpty()){
-                throw new NepotpunUnosException("nepotpun unos kod edita sisavca");
+            if (ime1.isEmpty() ||tezinaTextfield.getText().isEmpty()){
+                throw new NepotpunUnosException("nepotpun unos kod edita ptica");
             }else {
-                novi= new Sisavci(ime1,hrana1,staniste1,tezina1,bojaKrzna1);
+                novi= new Ptice(ime1,hrana1,staniste1, (int) tezina1,rasponkrila1);
             }
 
         } catch (NumberFormatException e) {
@@ -76,7 +76,7 @@ public class EditSisavacController {
         } catch (NepotpunUnosException e ) {
             throw new RuntimeException(e);
         }
-        BazaPodataka.editSisavac(stari,novi);
+        BazaPodataka.editPtica(stari,novi);
         upozorenje("uspjesno");
 
         //todo zapis u serijalizirani file promjenu
@@ -85,7 +85,7 @@ public class EditSisavacController {
     }
     public void nazad() throws IOException {
         IzbornikController a= new IzbornikController();
-        a.pregledSisavacScreen();
+        a.pregledPticaScreen();
     }
 
 }

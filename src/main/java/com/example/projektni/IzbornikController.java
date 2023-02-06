@@ -1,5 +1,6 @@
 package com.example.projektni;
 
+import BazaPodataka.BazaPodataka;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
@@ -13,6 +14,7 @@ public class IzbornikController {
         HelloApplication.getMainStage().setTitle("Hello!");
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
+        BazaPodataka.isAdmin=0;
     }
     public void pregledSisavacScreen() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PretragaSisavac.fxml"));
@@ -23,6 +25,20 @@ public class IzbornikController {
     }
     public void editSisavacScreen() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("EditSisavac.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        HelloApplication.getMainStage().setTitle("Hello!");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }
+
+    public void pregledPticaScreen() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PretragaPtica.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        HelloApplication.getMainStage().setTitle("Hello!");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }    public void editPticaScreen() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("EditPtica.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         HelloApplication.getMainStage().setTitle("Hello!");
         HelloApplication.getMainStage().setScene(scene);
