@@ -49,12 +49,10 @@ public class LoginFormController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //nije radilo sa statickim metodama, pogotovo kad u sam dodavao metode u menuitem
         IzbornikController a = new IzbornikController();
         if (BCrypt.checkpw(sifra, korisnikpass)) {
             System.out.println("Password matches korisnik");
             BazaPodataka.isAdmin = 0;
-            //todo admin privilegije na editu i brisanju ugl samo if() i ak nije popup da nemamo privilegiju
             a.pregledSisavacScreen();
         } else if (BCrypt.checkpw(sifra, adminpass)) {
             BazaPodataka.isAdmin = 1;
@@ -64,8 +62,6 @@ public class LoginFormController {
             upozorenje("krivi username ili sifra");
             System.out.println("Password does not match");
         }
-
-
     }
 
     public static void upozorenje(String a) {

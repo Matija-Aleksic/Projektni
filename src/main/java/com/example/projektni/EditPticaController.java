@@ -1,10 +1,7 @@
 package com.example.projektni;
 
 import BazaPodataka.BazaPodataka;
-import Entiteti.Prehrana;
-import Entiteti.Ptice;
-import Entiteti.Sisavci;
-import Entiteti.Staniste;
+import Entiteti.*;
 import Iznimke.NepotpunUnosException;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -12,6 +9,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
@@ -33,12 +31,31 @@ public class EditPticaController {
     private Staniste staniste1;
 
     public void initialize(){
-        imeTextfield.setText(stari.getIme());
+        if (Optional.ofNullable(stari).isPresent()) {
+            imeTextfield.setText(stari.getIme());
 
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
+            prehranachoiceBox.setValue(stari.getHrana());
+
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("RijekaiJezera"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Planina"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("VodenaStanista"));
+            stanistechoiceBox.setValue(stari.getStaniste());
+
+            tezinaTextfield.setText(String.valueOf(stari.getTezina()));
+
+            rasponkrilaTextfield.setText(stari.getSirinaKrila());
+        }
         prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
         prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
         prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
-        prehranachoiceBox.setValue(stari.getHrana());
+        prehranachoiceBox.setValue(Prehrana.Biljojed);
 
         stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
@@ -47,11 +64,7 @@ public class EditPticaController {
         stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("VodenaStanista"));
-        stanistechoiceBox.setValue(stari.getStaniste());
-
-        tezinaTextfield.setText(String.valueOf(stari.getTezina()));
-
-        rasponkrilaTextfield.setText(stari.getSirinaKrila());
+        stanistechoiceBox.setValue(Staniste.Grad);
 
     }
 
@@ -79,7 +92,6 @@ public class EditPticaController {
         BazaPodataka.editPtica(stari,novi);
         upozorenje("uspjesno");
 
-        //todo zapis u serijalizirani file promjenu
 
 
     }
@@ -88,4 +100,19 @@ public class EditPticaController {
         a.pregledPticaScreen();
     }
 
+    public void dodajNovu() throws SQLException, IOException {
+
+        Ptice tempPtica = new Builder()
+        .withIme(imeTextfield.getText())
+        .withPrehrana(prehranachoiceBox.getValue())
+        .withStaniste(stanistechoiceBox.getValue())
+        .withTezina(Float.parseFloat(tezinaTextfield.getText()))
+        .withSirinaKrila(rasponkrilaTextfield.getText().toString())
+        .buildPtica();
+        BazaPodataka.dodajPtice(tempPtica);
+
+        //todo dodati promjenu u file
+
+    }
+//todo dodati "dodaj novi" gumb koji preko buildera stava novu zivotinju
 }

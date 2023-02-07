@@ -79,7 +79,12 @@ public class PretragaSisavacController {
     public void Izmijeni() throws IOException {
         if (BazaPodataka.isAdmin==1){
             IzbornikController a = new IzbornikController();
-            EditSisavacController.stari=SisavciTableView.getSelectionModel().getSelectedItem();
+
+            if (SisavciTableView.getSelectionModel().isEmpty()){
+                a.editSisavacScreen();
+            }else{
+                EditSisavacController.stari= SisavciTableView.getSelectionModel().getSelectedItem();
+            }
             a.editSisavacScreen();
         }else {
             upozorenje("nemate admin privilegije");

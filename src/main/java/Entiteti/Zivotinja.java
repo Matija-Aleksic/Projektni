@@ -1,10 +1,10 @@
 package Entiteti;
 
 public abstract class Zivotinja {
-    private String ime;
-    private Prehrana hrana;
-    private Staniste staniste;
-    private float tezina;
+    String ime;
+    Prehrana hrana;
+    Staniste staniste;
+    float tezina;
 
     public Zivotinja(String ime, Prehrana hrana, Staniste staniste, float tezina) {
         this.ime = ime;

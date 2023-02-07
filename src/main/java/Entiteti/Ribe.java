@@ -15,4 +15,8 @@ public class Ribe extends Zivotinja {
     public Voda getVoda() {
         return voda;
     }
+    Ribe(Builder builder) {
+        super(builder.ime, builder.hrana,builder.staniste,builder.tezina);
+        this.voda = builder.voda;
+    }
 }

@@ -13,7 +13,16 @@ public String sirinaKrila;
         this.sirinaKrila = sirinaKrila;
     }
 
+
+
     public String getSirinaKrila() {
         return sirinaKrila;
     }
+    public Ptice(Builder builder) {
+        super(builder.ime, builder.hrana,builder.staniste,builder.tezina);
+        this.sirinaKrila = builder.sirinaKrila;
+    }
+
+
 }
+

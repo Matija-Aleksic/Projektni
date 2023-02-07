@@ -27,5 +27,9 @@ public class Sisavci extends Zivotinja{
     public void setBojaKrzna(String bojaKrzna) {
         this.bojaKrzna = bojaKrzna;
     }
+    Sisavci(Builder builder) {
+        super(builder.ime, builder.hrana,builder.staniste,builder.tezina);
+        this.bojaKrzna = builder.bojaKrzna;
+    }
 
 }

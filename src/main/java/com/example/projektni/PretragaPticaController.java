@@ -3,7 +3,6 @@ package com.example.projektni;
 import BazaPodataka.BazaPodataka;
 import Entiteti.Prehrana;
 import Entiteti.Ptice;
-import Entiteti.Sisavci;
 import Entiteti.Staniste;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -80,7 +79,7 @@ public class PretragaPticaController {
             IzbornikController a = new IzbornikController();
 
             if (pticeTableView.getSelectionModel().isEmpty()){
-                upozorenje("nije odabrana zivotinja");
+                a.editPticaScreen();
             }else{
                 EditPticaController.stari= pticeTableView.getSelectionModel().getSelectedItem();
             }

@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
+import static com.example.projektni.LoginFormController.upozorenje;
+
 public class BazaPodataka {
 
     //-1 nije uspjesan login
@@ -86,7 +88,7 @@ public class BazaPodataka {
 
 
     public static void obrisi(Sisavci sisavci) throws SQLException, IOException {
-        //todo napravit ak ne postoji zivotinja i spremanje promjene u binarnu datoteku
+
 
         Connection veza= spajanjeNaBazu();
         PreparedStatement statement = veza.prepareStatement("DELETE FROM SISAVCI WHERE IME = ?");
@@ -142,6 +144,18 @@ public class BazaPodataka {
         }
         return lista;
     }
+    public static void dodajPtice(Ptice ptice) throws SQLException, IOException {
+        Connection veza = spajanjeNaBazu();
+        PreparedStatement statement = veza.prepareStatement("INSERT INTO ptice (ime, prehrana, staniste, tezina, rasponKrila) VALUES (?, ?, ?, ?, ?)");
+        statement.setString(1, ptice.getIme());
+        statement.setString(2, ptice.getHrana().toString());
+        statement.setString(3, ptice.getStaniste().toString());
+        statement.setFloat(4, ptice.getTezina());
+        statement.setString(5, ptice.getSirinaKrila());
+        statement.executeUpdate();
+        System.out.println("ptica dodana u bazu");
+        upozorenje("uspjesno");
+    }
 
     public static void obrisiptice(Ptice ptice) throws SQLException, IOException {
 
@@ -192,11 +206,16 @@ public class BazaPodataka {
         Statement a= veza.createStatement();
         ResultSet resultSet = a.executeQuery(upit);
         while (resultSet.next()) {
+            Staniste staniste1 = Staniste.RijekaiJezera;
             String imena =resultSet.getString("ime");
             Prehrana prehrana= Prehrana.valueOf(resultSet.getString("prehrana"));
-            Staniste staniste1= Staniste.More;
+
             float tezina1= Float.parseFloat(resultSet.getString("tezina"));
             Voda voda1= Voda.valueOf(resultSet.getString("Voda"));
+            if (voda1==Voda.Morsko){
+                 staniste1= Staniste.More;
+            }
+
             Ribe novariba = new Ribe(imena, prehrana, staniste1, tezina1, voda1);
             lista.add(novariba);
         }
@@ -205,7 +224,6 @@ public class BazaPodataka {
 
     public static void obrisiRibu(Ribe riba) throws SQLException, IOException {
 
-        //todo napravit ak ne postoji zivotinja i spremanje promjene u binarnu datoteku
         Connection veza= spajanjeNaBazu();
         PreparedStatement statement = veza.prepareStatement("DELETE FROM RIBE WHERE IME = ?");
         statement.setString(1, riba.getIme());
@@ -226,6 +244,33 @@ public class BazaPodataka {
         preparedStatement.execute();
         System.out.println("updated riba");
 
+
+    }
+
+    public static void dodajRibe(Ribe tempRiba) throws SQLException, IOException {
+        Connection veza = spajanjeNaBazu();
+        PreparedStatement statement = veza.prepareStatement("INSERT INTO ribe (ime, prehrana, staniste, tezina, voda) VALUES (?, ?, ?, ?, ?)");
+        statement.setString(1,tempRiba.getIme());
+        statement.setString(2,tempRiba.getHrana().toString());
+        statement.setString(3,tempRiba.getStaniste().toString());
+        statement.setFloat(4, tempRiba.getTezina());
+        statement.setString(5,tempRiba.getVoda().toString());
+        statement.executeUpdate();
+        System.out.println("riba dodana u bazu");
+        upozorenje("uspjesno");
+    }
+
+    public static void dodajSisavca(Sisavci tempSisavac) throws SQLException, IOException {
+        Connection veza = spajanjeNaBazu();
+        PreparedStatement statement = veza.prepareStatement("INSERT INTO sisavci (ime, prehrana, staniste, tezina, bojakrzna) VALUES (?, ?, ?, ?, ?)");
+        statement.setString(1,tempSisavac.getIme());
+        statement.setString(2,tempSisavac.getHrana().toString());
+        statement.setString(3,tempSisavac.getStaniste().toString());
+        statement.setFloat(4, tempSisavac.getTezina());
+        statement.setString(5,tempSisavac.getBojaKrzna());
+        statement.executeUpdate();
+        System.out.println("Sisavac dodan u bazu");
+        upozorenje("uspjesno");
 
     }
 }

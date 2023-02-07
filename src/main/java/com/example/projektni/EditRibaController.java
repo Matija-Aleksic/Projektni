@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
@@ -30,12 +31,35 @@ public class EditRibaController {
     private Staniste staniste1;
 
     public void initialize(){
-        imeTextfield.setText(stari.getIme());
+        if (Optional.ofNullable(stari).isPresent()) {
+            imeTextfield.setText(stari.getIme());
+
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
+            prehranachoiceBox.setValue(stari.getHrana());
+
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("RijekaiJezera"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Planina"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("VodenaStanista"));
+            stanistechoiceBox.setValue(stari.getStaniste());
+
+            tezinaTextfield.setText(String.valueOf(stari.getTezina()));
+
+            vodaChoiceBox.getItems().add(Voda.valueOf("Slatkovodno"));
+            vodaChoiceBox.getItems().add(Voda.valueOf("Morsko"));
+            vodaChoiceBox.setValue(stari.getVoda());
+
+        }
 
         prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
         prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
         prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
-        prehranachoiceBox.setValue(stari.getHrana());
+        prehranachoiceBox.setValue(Prehrana.Biljojed);
 
         stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
@@ -44,13 +68,11 @@ public class EditRibaController {
         stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("VodenaStanista"));
-        stanistechoiceBox.setValue(stari.getStaniste());
-
-        tezinaTextfield.setText(String.valueOf(stari.getTezina()));
+        stanistechoiceBox.setValue(Staniste.Grad);
 
         vodaChoiceBox.getItems().add(Voda.valueOf("Slatkovodno"));
         vodaChoiceBox.getItems().add(Voda.valueOf("Morsko"));
-        vodaChoiceBox.setValue(stari.getVoda());
+        vodaChoiceBox.setValue(Voda.Morsko);
 
     }
 
@@ -85,5 +107,19 @@ public class EditRibaController {
     public void nazad() throws IOException {
         IzbornikController a= new IzbornikController();
         a.pregledRibaScreen();
+    }
+    public void dodajNovu() throws SQLException, IOException {
+
+        Ribe tempRiba = new Builder()
+                .withIme(imeTextfield.getText())
+                .withPrehrana(prehranachoiceBox.getValue())
+                .withStaniste(stanistechoiceBox.getValue())
+                .withTezina(Float.parseFloat(tezinaTextfield.getText()))
+                .withVoda(vodaChoiceBox.getValue())
+                .buildRiba();
+        BazaPodataka.dodajRibe(tempRiba);
+
+        //todo dodati promjenu u file
+
     }
 }

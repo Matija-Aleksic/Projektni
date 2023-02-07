@@ -60,5 +60,6 @@
         <Button mnemonicParsing="false" onAction="#dodaj" text="Promijeni" GridPane.columnIndex="2" GridPane.rowIndex="6" />
         <Button mnemonicParsing="false" onAction="#nazad" text="nazad" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
       <ChoiceBox fx:id="vodaChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Button mnemonicParsing="false" onAction="#dodajNovu" text="dodaj novu" GridPane.columnIndex="1" GridPane.rowIndex="6" />
     </children>
 </GridPane>

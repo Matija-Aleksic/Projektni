@@ -1,9 +1,7 @@
 package com.example.projektni;
 
 import BazaPodataka.BazaPodataka;
-import Entiteti.Prehrana;
-import Entiteti.Sisavci;
-import Entiteti.Staniste;
+import Entiteti.*;
 import Iznimke.NepotpunUnosException;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -13,6 +11,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
@@ -33,12 +32,32 @@ public class EditSisavacController {
     private Staniste staniste1;
 
     public void initialize(){
-        imeTextfield.setText(stari.getIme());
+        if(Optional.ofNullable(stari).isPresent()){
+            imeTextfield.setText(stari.getIme());
+
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
+            prehranachoiceBox.setValue(stari.getHrana());
+
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("RijekaiJezera"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Planina"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("VodenaStanista"));
+            stanistechoiceBox.setValue(stari.getStaniste());
+
+            tezinaTextfield.setText(String.valueOf(stari.getTezina()));
+
+            bojaKrznaTextfield.setText(stari.getBojaKrzna());
+        }
 
         prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
         prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
         prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
-        prehranachoiceBox.setValue(stari.getHrana());
+        prehranachoiceBox.setValue(Prehrana.Biljojed);
 
         stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
@@ -47,11 +66,7 @@ public class EditSisavacController {
         stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));
         stanistechoiceBox.getItems().add(Staniste.valueOf("VodenaStanista"));
-        stanistechoiceBox.setValue(stari.getStaniste());
-
-        tezinaTextfield.setText(String.valueOf(stari.getTezina()));
-
-        bojaKrznaTextfield.setText(stari.getBojaKrzna());
+        stanistechoiceBox.setValue(Staniste.Planina);
 
     }
 
@@ -79,13 +94,26 @@ public class EditSisavacController {
         BazaPodataka.editSisavac(stari,novi);
         upozorenje("uspjesno");
 
-        //todo zapis u serijalizirani file promjenu
 
 
     }
     public void nazad() throws IOException {
         IzbornikController a= new IzbornikController();
         a.pregledSisavacScreen();
+    }
+    public void dodajNovu() throws SQLException, IOException {
+
+        Sisavci tempSisavac = new Builder()
+                .withIme(imeTextfield.getText())
+                .withPrehrana(prehranachoiceBox.getValue())
+                .withStaniste(stanistechoiceBox.getValue())
+                .withTezina(Float.parseFloat(tezinaTextfield.getText()))
+                .withBojaKrzna(bojaKrznaTextfield.getText())
+                .buildSisavac();
+        BazaPodataka.dodajSisavca(tempSisavac);
+
+        //todo dodati promjenu u file
+
     }
 
 }

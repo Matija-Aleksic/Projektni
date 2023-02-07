@@ -82,7 +82,7 @@ public class PretragaRibaController {
             IzbornikController a = new IzbornikController();
 
             if (ribeTableView.getSelectionModel().isEmpty()){
-                upozorenje("nije odabrana zivotinja");
+                a.editRibaScreen();
             }else{
                 EditRibaController.stari= ribeTableView.getSelectionModel().getSelectedItem();
             }
