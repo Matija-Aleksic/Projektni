@@ -18,7 +18,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Promjene">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Vidi promjene" />
+                  <MenuItem mnemonicParsing="false" onAction="#prikazPromjenaScreen" text="Prikazi Promjene" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Log Off">

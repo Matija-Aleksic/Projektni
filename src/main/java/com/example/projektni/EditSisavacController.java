@@ -3,6 +3,8 @@ package com.example.projektni;
 import BazaPodataka.BazaPodataka;
 import Entiteti.*;
 import Iznimke.NepotpunUnosException;
+import datoteke.Promjene;
+import datoteke.ZapisPromjene;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.example.projektni.LoginFormController.upozorenje;
@@ -92,6 +95,10 @@ public class EditSisavacController {
             throw new RuntimeException(e);
         }
         BazaPodataka.editSisavac(stari,novi);
+        ZapisPromjene.dodajPromjenu(
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"promjenjen sisavac "+stari.getIme() +" "+stari.getHrana() +" "+stari.getStaniste() +" "+stari.getTezina() +" " +stari.getBojaKrzna() +
+                        " u" +" "+ime1 +" "+hrana1 +" "+staniste1 +" "+tezina1 +" " +bojaKrzna1)
+        );
         upozorenje("uspjesno");
 
 
@@ -111,6 +118,12 @@ public class EditSisavacController {
                 .withBojaKrzna(bojaKrznaTextfield.getText())
                 .buildSisavac();
         BazaPodataka.dodajSisavca(tempSisavac);
+
+        ZapisPromjene.dodajPromjenu(
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"dodan sisavac "+imeTextfield.getText() +" "+prehranachoiceBox.getValue().toString()
+                                                                                                +" "+stanistechoiceBox.getValue().toString() +" "+tezinaTextfield.getText()
+                                                                                                +" " +bojaKrznaTextfield.getText())
+        );
 
         //todo dodati promjenu u file
 

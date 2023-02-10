@@ -3,12 +3,15 @@ package com.example.projektni;
 import BazaPodataka.BazaPodataka;
 import Entiteti.*;
 import Iznimke.NepotpunUnosException;
+import datoteke.Promjene;
+import datoteke.ZapisPromjene;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.example.projektni.LoginFormController.upozorenje;
@@ -98,6 +101,10 @@ public class EditRibaController {
             throw new RuntimeException(e);
         }
         BazaPodataka.editRiba(stari,novi);
+        ZapisPromjene.dodajPromjenu(
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"promjenjena riba "+stari.getIme() +" "+stari.getHrana() +" "+stari.getStaniste() +" "+stari.getTezina() +" " +stari.getVoda() +
+                        " u" +" "+ime1 +" "+hrana1 +" "+staniste1 +" "+tezina1 +" " +voda1)
+        );
         upozorenje("uspjesno");
 
         //todo zapis u serijalizirani file promjenu
@@ -117,6 +124,11 @@ public class EditRibaController {
                 .withTezina(Float.parseFloat(tezinaTextfield.getText()))
                 .withVoda(vodaChoiceBox.getValue())
                 .buildRiba();
+        ZapisPromjene.dodajPromjenu(
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"Dodana nova riba "+imeTextfield.getText() +" "+prehranachoiceBox.getValue().toString()
+                        +" "+stanistechoiceBox.getValue().toString() +" "+tezinaTextfield.getText()
+                        +" " +vodaChoiceBox.getValue().toString())
+        );
         BazaPodataka.dodajRibe(tempRiba);
 
         //todo dodati promjenu u file

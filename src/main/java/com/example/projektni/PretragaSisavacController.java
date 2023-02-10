@@ -5,6 +5,8 @@ import BazaPodataka.BazaPodataka;
 import Entiteti.Prehrana;
 import Entiteti.Sisavci;
 import Entiteti.Staniste;
+import datoteke.Promjene;
+import datoteke.ZapisPromjene;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +15,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import java.util.ArrayList;
@@ -68,6 +71,9 @@ public class PretragaSisavacController {
             BazaPodataka.obrisi(sisavci);
             LoginFormController.upozorenje("uspjesno");
             List<Sisavci>temp;
+            ZapisPromjene.dodajPromjenu(
+                    new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"Obrisan Sisavac "+sisavci.getIme() +" "+sisavci.getHrana().toString() +" "+sisavci.getStaniste().toString() +" "+sisavci.getTezina() +" " +sisavci.getBojaKrzna())
+            );
             //da se refresha
             temp=BazaPodataka.dohvatiSisavce("null",null,null,0,"null");
             SisavciTableView.setItems(FXCollections.observableList(temp));

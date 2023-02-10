@@ -4,6 +4,8 @@ import BazaPodataka.BazaPodataka;
 import Entiteti.Prehrana;
 import Entiteti.Ptice;
 import Entiteti.Staniste;
+import datoteke.Promjene;
+import datoteke.ZapisPromjene;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +66,9 @@ public class PretragaPticaController {
         if (BazaPodataka.isAdmin==1){
             Ptice ptice= pticeTableView.getSelectionModel().getSelectedItem();
             BazaPodataka.obrisiptice(ptice);
+            ZapisPromjene.dodajPromjenu(
+                    new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"obrisana ptica"+ptice.getIme() +" "+ptice.getHrana().toString() +" "+ptice.getStaniste().toString() +" "+ptice.getTezina() +" " +ptice.getSirinaKrila())
+            );
             LoginFormController.upozorenje("uspjesno");
             List<Ptice>temp;
             //da se refresha

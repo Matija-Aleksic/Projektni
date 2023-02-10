@@ -5,6 +5,8 @@ import Entiteti.Prehrana;
 import Entiteti.Ribe;
 import Entiteti.Staniste;
 import Entiteti.Voda;
+import datoteke.Promjene;
+import datoteke.ZapisPromjene;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +69,9 @@ public class PretragaRibaController {
         if (BazaPodataka.isAdmin==1){
             Ribe ribe= ribeTableView.getSelectionModel().getSelectedItem();
             BazaPodataka.obrisiRibu(ribe);
+            ZapisPromjene.dodajPromjenu(
+                    new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"obrisana riba"+ribe.getIme() +" "+ribe.getHrana().toString() +" "+ribe.getStaniste().toString() +" "+ribe.getTezina() +" " +ribe.getVoda().toString())
+            );
             LoginFormController.upozorenje("uspjesno");
             List<Ribe>temp;
             //da se refresha

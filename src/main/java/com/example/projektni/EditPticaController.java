@@ -3,12 +3,15 @@ package com.example.projektni;
 import BazaPodataka.BazaPodataka;
 import Entiteti.*;
 import Iznimke.NepotpunUnosException;
+import datoteke.Promjene;
+import datoteke.ZapisPromjene;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.example.projektni.LoginFormController.upozorenje;
@@ -90,6 +93,10 @@ public class EditPticaController {
             throw new RuntimeException(e);
         }
         BazaPodataka.editPtica(stari,novi);
+        ZapisPromjene.dodajPromjenu(
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"promjenjena ptica "+stari.getIme() +" "+stari.getHrana() +" "+stari.getStaniste() +" "+stari.getTezina() +" " +stari.getSirinaKrila() +
+                        " u" +" "+ime1 +" "+hrana1 +" "+staniste1 +" "+tezina1 +" " +rasponkrila1)
+        );
         upozorenje("uspjesno");
 
 
@@ -109,10 +116,15 @@ public class EditPticaController {
         .withTezina(Float.parseFloat(tezinaTextfield.getText()))
         .withSirinaKrila(rasponkrilaTextfield.getText().toString())
         .buildPtica();
+        ZapisPromjene.dodajPromjenu(
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"Dodana nova ptica "+imeTextfield.getText() +" "+prehranachoiceBox.getValue().toString() +
+                                                                                                    " "+stanistechoiceBox.getValue().toString() +" "+tezinaTextfield.getText()
+                                                                                                    +" " +rasponkrilaTextfield.getText().toString())
+        );
         BazaPodataka.dodajPtice(tempPtica);
+        System.out.println("zapis u file");
+        ZapisPromjene.save();
 
-        //todo dodati promjenu u file
 
     }
-//todo dodati "dodaj novi" gumb koji preko buildera stava novu zivotinju
 }

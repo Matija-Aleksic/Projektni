@@ -14,6 +14,7 @@ public class IzbornikController {
         HelloApplication.getMainStage().setTitle("Hello!");
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
+        BazaPodataka.trenutniUser = null;
         BazaPodataka.isAdmin=0;
     }
     public void pregledSisavacScreen() throws IOException {
@@ -60,7 +61,13 @@ public class IzbornikController {
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
-
+    public void prikazPromjenaScreen() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PrikazPromjena.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        HelloApplication.getMainStage().setTitle("Hello!");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }
     //promjene file
 
     //promjena Screen kukca,sisavca, ribe, ptice

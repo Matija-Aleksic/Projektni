@@ -52,9 +52,11 @@ public class LoginFormController {
         IzbornikController a = new IzbornikController();
         if (BCrypt.checkpw(sifra, korisnikpass)) {
             System.out.println("Password matches korisnik");
+            BazaPodataka.trenutniUser = ime;
             BazaPodataka.isAdmin = 0;
             a.pregledSisavacScreen();
         } else if (BCrypt.checkpw(sifra, adminpass)) {
+            BazaPodataka.trenutniUser = ime;
             BazaPodataka.isAdmin = 1;
             System.out.println("Password matches admin");
             a.pregledSisavacScreen();

@@ -17,6 +17,7 @@ public class BazaPodataka {
     //-1 nije uspjesan login
     //0 basic user
     //1 admin user
+    public static String trenutniUser= null;
     public static int isAdmin=-1;
     private static final String DATABASE_FILE = "src/main/resources/Properties";
     public static Connection spajanjeNaBazu() throws SQLException, IOException {
