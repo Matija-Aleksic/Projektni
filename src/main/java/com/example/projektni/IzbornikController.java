@@ -68,8 +68,4 @@ public class IzbornikController {
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
-    //promjene file
-
-    //promjena Screen kukca,sisavca, ribe, ptice
-
 }

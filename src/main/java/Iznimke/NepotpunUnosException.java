@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 public class NepotpunUnosException extends Exception{
 
-
     public NepotpunUnosException(String message) {
         super(message);
         Log.info("dogodio se nepotpun unos");

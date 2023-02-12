@@ -1,9 +1,4 @@
 package Entiteti;
-
-import Loger.Log;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class Ribe extends Zivotinja {
  Voda voda;
 

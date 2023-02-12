@@ -1,7 +1,5 @@
 package BazaPodataka;
 import Entiteti.*;
-import javafx.scene.control.Alert;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
@@ -30,27 +28,6 @@ public class BazaPodataka {
                 korisnickoIme,lozinka);
         return veza;
     }
-
-//    public static void ProvjeriDaliPostoji(String ime, String sifra) throws SQLException, IOException {
-//        Connection connection = spajanjeNaBazu();
-//        PreparedStatement statement = connection.prepareStatement("SELECT role FROM users WHERE username = ? and PASSWORD = ?");
-//        statement.setString(1,ime);
-//        statement.setString(2,sifra);
-//        ResultSet rs = statement.executeQuery();
-//        if (rs.next()) {
-//            String role = rs.getString("role");
-//            if (role.equals("admin")) {
-//                isAdmin = 1;
-//            } else {
-//                isAdmin= 0;
-//            }
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error");
-//            alert.setHeaderText("user nije pronaden");
-//            alert.showAndWait();
-//        }
-//    }
 
     public static List<Sisavci> dohvatiSisavce(String ime, Prehrana hrana, Staniste staniste, float tezina, String bojaKrzna) throws SQLException, IOException {
         List<Sisavci> lista = new ArrayList<>();
@@ -159,8 +136,6 @@ public class BazaPodataka {
     }
 
     public static void obrisiptice(Ptice ptice) throws SQLException, IOException {
-
-            //todo napravit ak ne postoji zivotinja i spremanje promjene u binarnu datoteku
             Connection veza= spajanjeNaBazu();
             PreparedStatement statement = veza.prepareStatement("DELETE FROM Ptice WHERE IME = ?");
             statement.setString(1, ptice.getIme());

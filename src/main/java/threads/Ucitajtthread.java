@@ -1,6 +1,4 @@
 package threads;
-
-
 import datoteke.ZapisPromjene;
 
 public class Ucitajtthread implements Runnable{

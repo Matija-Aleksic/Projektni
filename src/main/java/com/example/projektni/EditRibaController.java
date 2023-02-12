@@ -107,9 +107,6 @@ public class EditRibaController {
         );
         upozorenje("uspjesno");
 
-        //todo zapis u serijalizirani file promjenu
-
-
     }
     public void nazad() throws IOException {
         IzbornikController a= new IzbornikController();
@@ -131,7 +128,6 @@ public class EditRibaController {
         );
         BazaPodataka.dodajRibe(tempRiba);
 
-        //todo dodati promjenu u file
 
     }
 }

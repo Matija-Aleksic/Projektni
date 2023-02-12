@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 
-
 public class LoginFormController {
     private static final String DATABASE_FILE = "src/main/resources/Properties";
 
@@ -72,9 +71,5 @@ public class LoginFormController {
         alert.setHeaderText(a);
         alert.showAndWait();
     }
-
-
-
-
 
 }

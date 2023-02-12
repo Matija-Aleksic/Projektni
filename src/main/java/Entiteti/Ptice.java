@@ -1,9 +1,5 @@
 package Entiteti;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class Ptice extends Zivotinja{
 
 public String sirinaKrila;

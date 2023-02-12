@@ -1,5 +1,4 @@
 package com.example.projektni;
-
 import BazaPodataka.BazaPodataka;
 import Entiteti.Prehrana;
 import Entiteti.Ptice;
@@ -10,7 +9,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -120,7 +118,5 @@ public class PretragaPticaController {
         temp= BazaPodataka.dohvatiptice(ime,prehrana,staniste,tezina, sirinakrila);
         pticeTableView.setItems(FXCollections.observableList(temp));
     }
-
-
 
 }

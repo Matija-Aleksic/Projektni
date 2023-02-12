@@ -126,7 +126,6 @@ public class EditSisavacController {
                                                                                                 +" " +bojaKrznaTextfield.getText())
         );
 
-        //todo dodati promjenu u file
 
     }
 

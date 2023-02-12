@@ -36,5 +36,4 @@ public class ZapisPromjene {
             e.printStackTrace();
         }
     }
-//todo thread koji svakih x sekundi zove save()
 }

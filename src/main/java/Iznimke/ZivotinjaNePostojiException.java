@@ -3,7 +3,6 @@ package Iznimke;
 public class ZivotinjaNePostojiException extends Exception{
     public ZivotinjaNePostojiException() {
     }
-
     public ZivotinjaNePostojiException(String message) {
         super(message);
     }
