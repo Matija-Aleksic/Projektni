@@ -1,10 +1,10 @@
 package datoteke;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.File;
+
+import static com.example.projektni.PrikazPromjenaController.promjenes;
+
 public class ZapisPromjene {
 
 
@@ -23,7 +23,18 @@ public class ZapisPromjene {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            listaPromjena.clear();
             System.out.println("saving...");
         }
+
+    public static synchronized void loadChangeLogs() {
+        try (FileInputStream fis = new FileInputStream(datoteka);
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+            List<Promjene> logs = (List<Promjene>) ois.readObject();
+            promjenes.addAll(logs);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 //todo thread koji svakih x sekundi zove save()
 }

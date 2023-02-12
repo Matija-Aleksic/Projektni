@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.mindrot.jbcrypt.BCrypt;
 import threads.SaveThread;
+import threads.Ucitajtthread;
 
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -35,18 +36,23 @@ public static Stage getMainStage(){
     public static void main(String[] args) {
 
         Timeline loop = new Timeline(
-                new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+                new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         Platform.runLater(new SaveThread("a"));
+                        Platform.runLater(new Ucitajtthread());
                     }
                 }));
         loop.setCycleCount(Timeline.INDEFINITE);
         loop.play();
 
         SaveThread a = new SaveThread("save");
+        Ucitajtthread b = new Ucitajtthread();
+
         ExecutorService executorService= Executors.newCachedThreadPool();
+        executorService.execute(b);
         executorService.execute(a);
+
         System.out.println("pokrenut thread");
         launch();
     }

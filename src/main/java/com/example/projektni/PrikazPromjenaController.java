@@ -13,9 +13,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+
+
+
 
 public class PrikazPromjenaController {
+    public static List<Promjene> logs;
     static String datoteka = "src/main/resources/com/example/projektni/promjene";
         @FXML private TableView<Promjene> tableView;
 
@@ -25,27 +28,19 @@ public class PrikazPromjenaController {
 
         @FXML private TableColumn<Promjene, String> actionColumn;
 
-        private static ObservableList<Promjene> promjenes = FXCollections.observableArrayList();
+        public static ObservableList<Promjene> promjenes = FXCollections.observableArrayList();
 
         @FXML
         public void initialize() {
-            loadChangeLogs();
+            //loadChangeLogs();
 
-            userColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUser()));;
+            userColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUser()));
             dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVrijeme().toString()));
             actionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSqlupit()));
 
             tableView.setItems(promjenes);
         }
 
-        private static synchronized void loadChangeLogs() {
-            try (FileInputStream fis = new FileInputStream(datoteka);
-                 ObjectInputStream ois = new ObjectInputStream(fis)) {
-                List<Promjene> logs = (List<Promjene>) ois.readObject();
-                promjenes.addAll(logs);
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+
 
 }
