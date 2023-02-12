@@ -16,13 +16,14 @@ public class ZapisPromjene {
             listaPromjena.add(promjena);
         }
 
-        public static void save() {
+        public static synchronized void save() {
             try (FileOutputStream fos = new FileOutputStream(datoteka);
                  ObjectOutputStream oos = new ObjectOutputStream(fos)) {
                  oos.writeObject(listaPromjena);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println("saving...");
         }
 //todo thread koji svakih x sekundi zove save()
 }

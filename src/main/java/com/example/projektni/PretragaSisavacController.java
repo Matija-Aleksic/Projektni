@@ -16,10 +16,12 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
@@ -41,6 +43,8 @@ public class PretragaSisavacController {
         List<Sisavci> popis = new ArrayList<>();
         popis=BazaPodataka.dohvatiSisavce("null",null,null,0,"null");
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
+        popis.stream().sorted()
+                        .count();
         prehranaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHrana().toString()));
         stanisteTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStaniste().toString()));
         tezinaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTezinaString()));
@@ -97,12 +101,14 @@ public class PretragaSisavacController {
         }
     }
     public void pretraga() throws SQLException, IOException {
-        String ime = "null";
+        String ime;
         String bojaKrzna="null";
-        Prehrana prehrana = null;
+        Prehrana prehrana;
         Staniste staniste= null;
         if (!imeTextField.getText().isEmpty()) {
             ime = imeTextField.getText();
+        } else {
+            ime = "null";
         }
         float tezina = 0;
         if (!tezinaTextField.getText().isEmpty()) {
@@ -112,8 +118,10 @@ public class PretragaSisavacController {
         if (!bojaKrznaTextField.getText().isEmpty()) {
             bojaKrzna = bojaKrznaTextField.getText();
         }
-        if (prehranachoiceBox.getValue()!=""){
-            prehrana= Prehrana.valueOf(prehranachoiceBox.getValue());
+        if (prehranachoiceBox.getValue()!="") {
+            prehrana = Prehrana.valueOf(prehranachoiceBox.getValue());
+        } else {
+            prehrana = null;
         }
         if (stanistechoiceBox.getValue() !="") {
             staniste= Staniste.valueOf(stanistechoiceBox.getValue());

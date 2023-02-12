@@ -16,7 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class PrikazPromjenaController {
-    String datoteka = "src/main/resources/com/example/projektni/promjene";
+    static String datoteka = "src/main/resources/com/example/projektni/promjene";
         @FXML private TableView<Promjene> tableView;
 
         @FXML private TableColumn<Promjene, String> userColumn;
@@ -25,7 +25,7 @@ public class PrikazPromjenaController {
 
         @FXML private TableColumn<Promjene, String> actionColumn;
 
-        private ObservableList<Promjene> promjenes = FXCollections.observableArrayList();
+        private static ObservableList<Promjene> promjenes = FXCollections.observableArrayList();
 
         @FXML
         public void initialize() {
@@ -38,7 +38,7 @@ public class PrikazPromjenaController {
             tableView.setItems(promjenes);
         }
 
-        private void loadChangeLogs() {
+        private static synchronized void loadChangeLogs() {
             try (FileInputStream fis = new FileInputStream(datoteka);
                  ObjectInputStream ois = new ObjectInputStream(fis)) {
                 List<Promjene> logs = (List<Promjene>) ois.readObject();

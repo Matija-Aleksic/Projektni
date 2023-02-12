@@ -55,21 +55,22 @@ public class EditSisavacController {
             tezinaTextfield.setText(String.valueOf(stari.getTezina()));
 
             bojaKrznaTextfield.setText(stari.getBojaKrzna());
+        }else {
+
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
+            prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
+            prehranachoiceBox.setValue(Prehrana.Biljojed);
+
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("RijekaiJezera"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Planina"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));
+            stanistechoiceBox.getItems().add(Staniste.valueOf("VodenaStanista"));
+            stanistechoiceBox.setValue(Staniste.Planina);
         }
-
-        prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
-        prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
-        prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
-        prehranachoiceBox.setValue(Prehrana.Biljojed);
-
-        stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
-        stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
-        stanistechoiceBox.getItems().add(Staniste.valueOf("RijekaiJezera"));
-        stanistechoiceBox.getItems().add(Staniste.valueOf("Planina"));
-        stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
-        stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));
-        stanistechoiceBox.getItems().add(Staniste.valueOf("VodenaStanista"));
-        stanistechoiceBox.setValue(Staniste.Planina);
 
     }
 
