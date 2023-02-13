@@ -2,6 +2,7 @@ package com.example.projektni;
 
 import BazaPodataka.BazaPodataka;
 import Iznimke.NepotpunUnosException;
+import Iznimke.UserNepostojiexception;
 import Loger.Log;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -25,9 +26,11 @@ public class LoginFormController {
     @FXML
     private Button LoginButton;
     @FXML
-    private void login() throws NepotpunUnosException, IOException {
+    private void login() throws NepotpunUnosException, IOException, UserNepostojiexception {
         String ime = username.getText();
         String sifra = password.getText();
+        if (ime!="admin"&&ime!="korisnik")
+            throw new UserNepostojiexception();
         try {
             if (sifra.isEmpty() || ime.isEmpty()) {
                 upozorenje("nepotpun unos");

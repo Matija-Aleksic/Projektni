@@ -7,7 +7,7 @@ import static com.example.projektni.PrikazPromjenaController.promjenes;
 
 public class ZapisPromjene {
 
-
+    private static List<Promjene> svepromjene=new ArrayList<>();
         private static List<Promjene> listaPromjena = new ArrayList<>();
         private static String datoteka="src/main/resources/com/example/projektni/promjene";
 
