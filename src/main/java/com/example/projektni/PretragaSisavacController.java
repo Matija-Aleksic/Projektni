@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.concurrent.TimeUnit;
 
 
 import static com.example.projektni.LoginFormController.upozorenje;
@@ -39,7 +39,9 @@ public class PretragaSisavacController {
     @FXML private TextField imeTextField;
     @FXML private TextField tezinaTextField;
     @FXML private TextField bojaKrznaTextField;
+    Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
     public void initialize() throws SQLException, IOException {
+        ab.setContentText("Jeste Li sigurni?");
         List<Sisavci> popis = new ArrayList<>();
         popis=BazaPodataka.dohvatiSisavce("null",null,null,0,"null");
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
@@ -68,40 +70,51 @@ public class PretragaSisavacController {
         stanistechoiceBox.setValue("");
 
     }
-    public void Obrisi(){
+    public void Obrisi() throws InterruptedException {
+        ab.showAndWait();
+        if (ab.getResult()== ButtonType.OK) {
 
-        if (BazaPodataka.isAdmin==1){
-            Sisavci sisavci= SisavciTableView.getSelectionModel().getSelectedItem();
-            try {
-                BazaPodataka.obrisi(sisavci);
-            } catch (SQLException e) {
-                Log.error("nije moguce spajanje na bazu");
-                throw new NijeMoguceSpajanjeNaBazuRuntimeException(e);
-            } catch (IOException e) {
-                Log.error("file promblem kod brisanja");
-                throw new FileRuntimeException();
+            if (BazaPodataka.isAdmin == 1) {
+
+                Sisavci sisavci = SisavciTableView.getSelectionModel().getSelectedItem();
+                try {
+                    BazaPodataka.obrisi(sisavci);
+                } catch (SQLException e) {
+                    Log.error("nije moguce spajanje na bazu");
+                    throw new NijeMoguceSpajanjeNaBazuRuntimeException(e);
+                } catch (IOException e) {
+                    Log.error("file promblem kod brisanja");
+                    throw new FileRuntimeException();
+                }
+                LoginFormController.upozorenje("uspjesno");
+                List<Sisavci> temp;
+                ZapisPromjene.dodajPromjenu(
+                        new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(), "Obrisan Sisavac " + sisavci.getIme() + " " + sisavci.getHrana().toString() + " " + sisavci.getStaniste().toString() + " " + sisavci.getTezina() + " " + sisavci.getBojaKrzna())
+                );
+                //da se refresha
+                try {
+                    temp = BazaPodataka.dohvatiSisavce("null", null, null, 0, "null");
+                } catch (SQLException e) {
+                    Log.error("nije moguce spajanje na bazu");
+                    throw new NijeMoguceSpajanjeNaBazuRuntimeException(e);
+                } catch (IOException e) {
+                    Log.error("file promblem kod brisanja");
+                    throw new FileRuntimeException();
+                }
+                SisavciTableView.setItems(FXCollections.observableList(temp));
+            } else {
+                upozorenje("nemate admin privilegije");
             }
-            LoginFormController.upozorenje("uspjesno");
-            List<Sisavci>temp;
-            ZapisPromjene.dodajPromjenu(
-                    new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"Obrisan Sisavac "+sisavci.getIme() +" "+sisavci.getHrana().toString() +" "+sisavci.getStaniste().toString() +" "+sisavci.getTezina() +" " +sisavci.getBojaKrzna())
-            );
-            //da se refresha
-            try {
-                temp=BazaPodataka.dohvatiSisavce("null",null,null,0,"null");
-            } catch (SQLException e) {
-                Log.error("nije moguce spajanje na bazu");
-                throw new NijeMoguceSpajanjeNaBazuRuntimeException(e);
-            } catch (IOException e) {
-                Log.error("file promblem kod brisanja");
-                throw new FileRuntimeException();
-            }
-            SisavciTableView.setItems(FXCollections.observableList(temp));
         }else {
-            upozorenje("nemate admin privilegije");
+
         }
     }
-    public void Izmijeni(){
+
+
+
+    public void Izmijeni() throws InterruptedException {
+        ab.showAndWait();
+        if (ab.getResult()== ButtonType.OK){
         try {
             if (BazaPodataka.isAdmin == 1) {
                 IzbornikController a = new IzbornikController();
@@ -118,6 +131,9 @@ public class PretragaSisavacController {
         } catch (IOException e) {
             Log.error("file promblem kod brisanja");
             throw new FileRuntimeException();
+        }
+        } else {
+
         }
     }
     public void pretraga() throws SQLException, IOException {

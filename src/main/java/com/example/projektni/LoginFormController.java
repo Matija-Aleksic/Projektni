@@ -29,8 +29,7 @@ public class LoginFormController {
     private void login() throws NepotpunUnosException, IOException, UserNepostojiexception {
         String ime = username.getText();
         String sifra = password.getText();
-        if (ime!="admin"&&ime!="korisnik")
-            throw new UserNepostojiexception();
+
         try {
             if (sifra.isEmpty() || ime.isEmpty()) {
                 upozorenje("nepotpun unos");

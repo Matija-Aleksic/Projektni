@@ -17,6 +17,7 @@ import java.util.List;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
+
 public class PretragaPticaController {
     @FXML
     private ChoiceBox<String> prehranachoiceBox;
@@ -32,7 +33,9 @@ public class PretragaPticaController {
     @FXML private TextField imeTextField;
     @FXML private TextField tezinaTextField;
     @FXML private TextField sirinakrilaTextField;
+    Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
     public void initialize() throws SQLException, IOException {
+        ab.setContentText("Jeste Li sigurni?");
         List<Ptice> popis = new ArrayList<>();
         popis= BazaPodataka.dohvatiptice("null",null,null,0,0);
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
@@ -60,7 +63,8 @@ public class PretragaPticaController {
 
     }
     public void Obrisi() throws SQLException, IOException {
-
+        ab.showAndWait();
+        if (ab.getResult()== ButtonType.OK){
         if (BazaPodataka.isAdmin==1){
             Ptice ptice= pticeTableView.getSelectionModel().getSelectedItem();
             BazaPodataka.obrisiptice(ptice);
@@ -75,21 +79,29 @@ public class PretragaPticaController {
         }else {
             upozorenje("nemate admin privilegije");
         }
+        }else {
+
+        }
 
     }
 
     public void Izmijeni() throws IOException {
-        if (BazaPodataka.isAdmin==1){
-            IzbornikController a = new IzbornikController();
+        ab.showAndWait();
+        if (ab.getResult()== ButtonType.OK) {
+            if (BazaPodataka.isAdmin == 1) {
+                IzbornikController a = new IzbornikController();
 
-            if (pticeTableView.getSelectionModel().isEmpty()){
+                if (pticeTableView.getSelectionModel().isEmpty()) {
+                    a.editPticaScreen();
+                } else {
+                    EditPticaController.stari = pticeTableView.getSelectionModel().getSelectedItem();
+                }
                 a.editPticaScreen();
-            }else{
-                EditPticaController.stari= pticeTableView.getSelectionModel().getSelectedItem();
+            } else {
+                upozorenje("nemate admin privilegije");
             }
-            a.editPticaScreen();
         }else {
-            upozorenje("nemate admin privilegije");
+            
         }
     }
     public void pretraga() throws SQLException, IOException {

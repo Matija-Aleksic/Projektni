@@ -35,7 +35,9 @@ public class PretragaRibaController {
     @FXML private TextField imeTextField;
     @FXML private TextField tezinaTextField;
     @FXML private ChoiceBox<String> vodaChoiceBox;
+    Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
     public void initialize() throws SQLException, IOException {
+        ab.setContentText("Jeste Li sigurni?");
         List<Ribe> popis = new ArrayList<>();
         popis= BazaPodataka.dohvatiRibe("null",null,null,0,null);
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
@@ -65,25 +67,31 @@ public class PretragaRibaController {
 
     }
     public void Obrisi() throws SQLException, IOException {
-
-        if (BazaPodataka.isAdmin==1){
-            Ribe ribe= ribeTableView.getSelectionModel().getSelectedItem();
-            BazaPodataka.obrisiRibu(ribe);
-            ZapisPromjene.dodajPromjenu(
-                    new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"obrisana riba"+ribe.getIme() +" "+ribe.getHrana().toString() +" "+ribe.getStaniste().toString() +" "+ribe.getTezina() +" " +ribe.getVoda().toString())
-            );
-            LoginFormController.upozorenje("uspjesno");
-            List<Ribe>temp;
-            //da se refresha
-            temp=BazaPodataka.dohvatiRibe("null",null,null,0,null);
-            ribeTableView.setItems(FXCollections.observableList(temp));
+        ab.showAndWait();
+        if (ab.getResult()== ButtonType.OK) {
+            if (BazaPodataka.isAdmin == 1) {
+                Ribe ribe = ribeTableView.getSelectionModel().getSelectedItem();
+                BazaPodataka.obrisiRibu(ribe);
+                ZapisPromjene.dodajPromjenu(
+                        new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(), "obrisana riba" + ribe.getIme() + " " + ribe.getHrana().toString() + " " + ribe.getStaniste().toString() + " " + ribe.getTezina() + " " + ribe.getVoda().toString())
+                );
+                LoginFormController.upozorenje("uspjesno");
+                List<Ribe> temp;
+                //da se refresha
+                temp = BazaPodataka.dohvatiRibe("null", null, null, 0, null);
+                ribeTableView.setItems(FXCollections.observableList(temp));
+            } else {
+                upozorenje("nemate admin privilegije");
+            }
         }else {
-            upozorenje("nemate admin privilegije");
+
         }
 
     }
 
     public void Izmijeni() throws IOException {
+        ab.showAndWait();
+        if (ab.getResult()== ButtonType.OK){
         if (BazaPodataka.isAdmin==1){
             IzbornikController a = new IzbornikController();
 
@@ -95,6 +103,9 @@ public class PretragaRibaController {
             a.editRibaScreen();
         }else {
             upozorenje("nemate admin privilegije");
+        }
+        }else {
+
         }
     }
     public void pretraga() throws SQLException, IOException {
