@@ -101,7 +101,7 @@ public class PretragaPticaController {
                 upozorenje("nemate admin privilegije");
             }
         }else {
-            
+
         }
     }
     public void pretraga() throws SQLException, IOException {

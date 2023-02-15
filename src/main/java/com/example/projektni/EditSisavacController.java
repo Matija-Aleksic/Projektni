@@ -3,6 +3,7 @@ package com.example.projektni;
 import BazaPodataka.BazaPodataka;
 import Entiteti.*;
 import Iznimke.NepotpunUnosException;
+import Loger.Log;
 import datoteke.Promjene;
 import datoteke.ZapisPromjene;
 import javafx.fxml.FXML;
@@ -84,6 +85,7 @@ public class EditSisavacController {
             hrana1=prehranachoiceBox.getValue();
             staniste1=stanistechoiceBox.getValue();
             if (ime1.isEmpty()||bojaKrzna1.isEmpty()||tezinaTextfield.getText().isEmpty()){
+                Log.error("nepotpun unos kod edita sisavca");
                 throw new NepotpunUnosException("nepotpun unos kod edita sisavca");
             }else {
                 novi= new Sisavci(ime1,hrana1,staniste1,tezina1,bojaKrzna1);
@@ -93,7 +95,8 @@ public class EditSisavacController {
             upozorenje("nepotpun unos");
             System.out.println("nepotpun unos");;
         } catch (NepotpunUnosException e ) {
-            throw new RuntimeException(e);
+            Log.error("nepotpun unos");
+
         }
         BazaPodataka.editSisavac(stari,novi);
         ZapisPromjene.dodajPromjenu(

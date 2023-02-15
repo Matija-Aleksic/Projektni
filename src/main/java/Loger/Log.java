@@ -11,5 +11,5 @@ public class Log {
     public static void error(String a){
         logger.error(a);
     }
-    //todo napravit jos 1 iznimku i svaku logitat. sortirati sa streamom() lambda
+    //todo sortirati sa streamom() lambda
 }
