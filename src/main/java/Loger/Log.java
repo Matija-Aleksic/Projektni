@@ -11,5 +11,4 @@ public class Log {
     public static void error(String a){
         logger.error(a);
     }
-    //todo sortirati sa streamom() lambda
 }

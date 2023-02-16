@@ -1,6 +1,7 @@
 package com.example.projektni;
 
 import BazaPodataka.BazaPodataka;
+import Iznimke.FileRuntimeException;
 import Iznimke.NepotpunUnosException;
 import Iznimke.UserNepostojiexception;
 import Loger.Log;
@@ -46,8 +47,10 @@ public class LoginFormController {
             adminpass = svojstva.getProperty("admin");
             korisnikpass = svojstva.getProperty("korisnik");
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            Log.error("problem sa file-om");
+            throw new FileRuntimeException();
         } catch (IOException e) {
+            Log.error("Io Exception");
             throw new RuntimeException(e);
         }
         IzbornikController a = new IzbornikController();
