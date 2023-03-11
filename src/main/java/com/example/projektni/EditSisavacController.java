@@ -112,8 +112,8 @@ public class EditSisavacController {
         IzbornikController a= new IzbornikController();
         a.pregledSisavacScreen();
     }
-    public void dodajNovu() throws SQLException, IOException {
-
+    public void dodajNovu() throws SQLException, IOException, NepotpunUnosException {
+        if (ime1.isEmpty()||bojaKrzna1.isEmpty()||tezinaTextfield.getText().isEmpty()){
         Sisavci tempSisavac = new Builder()
                 .withIme(imeTextfield.getText())
                 .withPrehrana(prehranachoiceBox.getValue())
@@ -128,6 +128,10 @@ public class EditSisavacController {
                                                                                                 +" "+stanistechoiceBox.getValue().toString() +" "+tezinaTextfield.getText()
                                                                                                 +" " +bojaKrznaTextfield.getText())
         );
+        }else{
+            throw new NepotpunUnosException("nepotpun inos kod sisavca");
+        }
+
 
 
     }
