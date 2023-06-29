@@ -16,17 +16,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
 public class PretragaSisavacController {
+    Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
     @FXML
     private ChoiceBox<String> prehranachoiceBox;
     @FXML
@@ -53,20 +53,20 @@ public class PretragaSisavacController {
     private TextField tezinaTextField;
     @FXML
     private TextField bojaKrznaTextField;
-    Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
 
     public void initialize() throws SQLException, IOException {
         ab.setContentText("Jeste Li sigurni?");
         List<Sisavci> popis = new ArrayList<>();
         popis = BazaPodataka.dohvatiSisavce("null", null, null, 0, "null");
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
-        popis.stream().sorted()
-                .count();
+        List<Sisavci> sortedList = popis.stream()
+                .sorted(Comparator.comparing(Sisavci::getIme))
+                .collect(Collectors.toList());
         prehranaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHrana().toString()));
         stanisteTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStaniste().toString()));
         tezinaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTezinaString()));
         bojaKrznaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBojaKrzna()));
-        SisavciTableView.setItems(FXCollections.observableList(popis));
+        SisavciTableView.setItems(FXCollections.observableList(sortedList));
 
         prehranachoiceBox.getItems().add("Biljojed");
         prehranachoiceBox.getItems().add("Mesojed");

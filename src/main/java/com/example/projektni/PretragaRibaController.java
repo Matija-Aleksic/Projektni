@@ -16,11 +16,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
 public class PretragaRibaController {
+    Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
     @FXML
     private ChoiceBox<String> prehranachoiceBox;
     @FXML
@@ -47,18 +50,20 @@ public class PretragaRibaController {
     private TextField tezinaTextField;
     @FXML
     private ChoiceBox<String> vodaChoiceBox;
-    Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
 
     public void initialize() throws SQLException, IOException {
         ab.setContentText("Jeste Li sigurni?");
         List<Ribe> popis = new ArrayList<>();
         popis = BazaPodataka.dohvatiRibe("null", null, null, 0, null);
+        List<Ribe> sortedList = popis.stream()
+                .sorted(Comparator.comparing(Ribe::getIme))
+                .collect(Collectors.toList());
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
         prehranaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHrana().toString()));
         stanisteTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStaniste().toString()));
         tezinaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTezinaString()));
         vodaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVoda().toString()));
-        ribeTableView.setItems(FXCollections.observableList(popis));
+        ribeTableView.setItems(FXCollections.observableList(sortedList));
 
         prehranachoiceBox.getItems().add(("Biljojed"));
         prehranachoiceBox.getItems().add(("Mesojed"));
@@ -97,8 +102,6 @@ public class PretragaRibaController {
             } else {
                 upozorenje("nemate admin privilegije");
             }
-        } else {
-
         }
 
     }
@@ -118,8 +121,6 @@ public class PretragaRibaController {
             } else {
                 upozorenje("nemate admin privilegije");
             }
-        } else {
-
         }
     }
 

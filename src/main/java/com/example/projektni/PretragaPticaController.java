@@ -15,12 +15,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.projektni.LoginFormController.upozorenje;
 
 
 public class PretragaPticaController {
+    Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
     @FXML
     private ChoiceBox<String> prehranachoiceBox;
     @FXML
@@ -47,18 +50,20 @@ public class PretragaPticaController {
     private TextField tezinaTextField;
     @FXML
     private TextField sirinakrilaTextField;
-    Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
 
     public void initialize() throws SQLException, IOException {
         ab.setContentText("Jeste Li sigurni?");
         List<Ptice> popis = new ArrayList<>();
         popis = BazaPodataka.dohvatiptice("null", null, null, 0, 0);
+        List<Ptice> sortedList = popis.stream()
+                .sorted(Comparator.comparing(Ptice::getIme))
+                .collect(Collectors.toList());
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
         prehranaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHrana().toString()));
         stanisteTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStaniste().toString()));
         tezinaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTezinaString()));
         rasponKrilaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSirinaKrila()));
-        pticeTableView.setItems(FXCollections.observableList(popis));
+        pticeTableView.setItems(FXCollections.observableList(sortedList));
 
         prehranachoiceBox.getItems().add("Biljojed");
         prehranachoiceBox.getItems().add("Mesojed");
@@ -95,8 +100,6 @@ public class PretragaPticaController {
             } else {
                 upozorenje("nemate admin privilegije");
             }
-        } else {
-
         }
 
     }
@@ -116,8 +119,6 @@ public class PretragaPticaController {
             } else {
                 upozorenje("nemate admin privilegije");
             }
-        } else {
-
         }
     }
 
