@@ -118,6 +118,5 @@ public class EditPticaController {
         System.out.println("zapis u file");
         ZapisPromjene.save();
 
-
     }
 }

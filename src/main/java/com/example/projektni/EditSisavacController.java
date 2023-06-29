@@ -1,7 +1,10 @@
 package com.example.projektni;
 
 import BazaPodataka.BazaPodataka;
-import Entiteti.*;
+import Entiteti.Builder;
+import Entiteti.Prehrana;
+import Entiteti.Sisavci;
+import Entiteti.Staniste;
 import Iznimke.NepotpunUnosException;
 import Loger.Log;
 import datoteke.Promjene;
@@ -11,8 +14,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class EditSisavacController {
 
     private String ime1;
     private String bojaKrzna1;
-    private float tezina1;
+    private Float tezina1;
     private Prehrana hrana1;
     private Staniste staniste1;
 
@@ -99,7 +100,7 @@ public class EditSisavacController {
         } catch (NumberFormatException e) {
             upozorenje("nepotpun unos");
             System.out.println("nepotpun unos");
-            ;
+
         } catch (NepotpunUnosException e) {
             Log.error("nepotpun unos");
 
@@ -120,7 +121,14 @@ public class EditSisavacController {
     }
 
     public void dodajNovu() throws SQLException, IOException, NepotpunUnosException {
-        if (ime1.isEmpty() || bojaKrzna1.isEmpty() || tezinaTextfield.getText().isEmpty()) {
+        ime1 = imeTextfield.getText();
+        bojaKrzna1 = bojaKrznaTextfield.getText();
+        tezina1 = Float.parseFloat(tezinaTextfield.getText());
+        hrana1 = prehranachoiceBox.getValue();
+        staniste1 = stanistechoiceBox.getValue();
+        if (ime1.isEmpty() || bojaKrzna1.isEmpty() || tezina1 == null) {
+            throw new NepotpunUnosException("nepotpun inos kod sisavca");
+        } else {
             Sisavci tempSisavac = new Builder()
                     .withIme(imeTextfield.getText())
                     .withPrehrana(prehranachoiceBox.getValue())
@@ -135,8 +143,6 @@ public class EditSisavacController {
                             + " " + stanistechoiceBox.getValue().toString() + " " + tezinaTextfield.getText()
                             + " " + bojaKrznaTextfield.getText())
             );
-        } else {
-            throw new NepotpunUnosException("nepotpun inos kod sisavca");
         }
 
 

@@ -1,13 +1,13 @@
 package Entiteti;
 
 public class Builder {
+    public Voda voda;
+    public String bojaKrzna;
     String ime;
     Prehrana hrana;
     Staniste staniste;
     float tezina;
     String sirinaKrila;
-    public Voda voda;
-    public String bojaKrzna;
 
     public Builder withIme(String ime) {
         this.ime = ime;

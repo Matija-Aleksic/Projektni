@@ -8,31 +8,30 @@ import static com.example.projektni.PrikazPromjenaController.promjenes;
 
 public class ZapisPromjene {
 
-    private static List<Promjene> svepromjene = new ArrayList<>();
-    private static List<Promjene> listaPromjena = new ArrayList<>();
-    private static String datoteka = "src/main/resources/com/example/projektni/promjene";
+    private static final List<Promjene> svepromjene = new ArrayList<>();
+    private static final List<Promjene> listaPromjena = new ArrayList<>();
+    private static final String datoteka = "src/main/resources/com/example/projektni/promjene";
 
     public static void dodajPromjenu(Promjene promjena) {
         listaPromjena.add(promjena);
     }
 
     public static synchronized void save() {
-        List<Promjene> postojecePromjene = loadChangeLogs(); // Učitaj postojeće promjene iz datoteke
+        List<Promjene> postojecePromjene = loadChangeLogs();
 
-        postojecePromjene.addAll(listaPromjena); // Dodaj nove promjene na postojeće
-        System.out.println("Sadržaj liste postojecePromjene nakon dodavanja:");
-        for (Promjene promjena : postojecePromjene) {
-            System.out.println(promjena);
-        }
+        postojecePromjene.addAll(listaPromjena);
+
 
         try (FileOutputStream fos = new FileOutputStream(datoteka);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(postojecePromjene); // Spremi sve promjene u datoteku
+            oos.writeObject(postojecePromjene);
         } catch (IOException e) {
             e.printStackTrace();
         }
         listaPromjena.clear();
-        System.out.println("saving...");
+
+        promjenes.clear();
+        promjenes.addAll(loadChangeLogs());
     }
 
     public static synchronized List<Promjene> loadChangeLogs() {
