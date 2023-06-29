@@ -53,9 +53,7 @@ public class EditRibaController {
 
             tezinaTextfield.setText(String.valueOf(stari.getTezina()));
 
-            vodaChoiceBox.getItems().add(Voda.valueOf("Slatkovodno"));
-            vodaChoiceBox.getItems().add(Voda.valueOf("Morsko"));
-            vodaChoiceBox.setValue(stari.getVoda());
+
 
         }
 
@@ -103,7 +101,7 @@ public class EditRibaController {
         BazaPodataka.editRiba(stari,novi);
         ZapisPromjene.dodajPromjenu(
                 new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"promjenjena riba "+stari.getIme() +" "+stari.getHrana() +" "+stari.getStaniste() +" "+stari.getTezina() +" " +stari.getVoda() +
-                        " u" +" "+ime1 +" "+hrana1 +" "+staniste1 +" "+tezina1 +" " +voda1)
+                        " u " +" "+ime1 +" "+hrana1 +" "+staniste1 +" "+tezina1 +" " +voda1)
         );
         upozorenje("uspjesno");
 

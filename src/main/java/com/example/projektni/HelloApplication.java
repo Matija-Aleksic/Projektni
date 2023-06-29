@@ -19,6 +19,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.example.projektni.PrikazPromjenaController.promjenes;
+import static datoteke.ZapisPromjene.loadChangeLogs;
+
 public class HelloApplication extends Application {
 private static Stage mainStage;
     @Override
@@ -52,6 +55,7 @@ public static Stage getMainStage(){
         ExecutorService executorService= Executors.newCachedThreadPool();
         executorService.execute(b);
         executorService.execute(a);
+        promjenes.addAll(loadChangeLogs());
 
         System.out.println("pokrenut thread");
         launch();

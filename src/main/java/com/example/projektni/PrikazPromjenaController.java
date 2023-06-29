@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import static datoteke.ZapisPromjene.loadChangeLogs;
+
 public class PrikazPromjenaController {
     public static List<Promjene> logs;
     static String datoteka = "src/main/resources/com/example/projektni/promjene";
@@ -27,8 +29,8 @@ public class PrikazPromjenaController {
 
     @FXML
     public void initialize() {
-        //loadChangeLogs();
-
+        promjenes.clear();
+        promjenes.addAll(loadChangeLogs());
         userColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUser()));
         dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVrijeme().toString()));
         actionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSqlupit()));

@@ -37,10 +37,7 @@ public class EditPticaController {
         if (Optional.ofNullable(stari).isPresent()) {
             imeTextfield.setText(stari.getIme());
 
-            prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
-            prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
-            prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
-            prehranachoiceBox.setValue(stari.getHrana());
+
 
             stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
             stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
