@@ -38,14 +38,6 @@ public class EditPticaController {
             imeTextfield.setText(stari.getIme());
 
 
-
-            stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
-            stanistechoiceBox.getItems().add(Staniste.valueOf("More"));
-            stanistechoiceBox.getItems().add(Staniste.valueOf("RijekaiJezera"));
-            stanistechoiceBox.getItems().add(Staniste.valueOf("Planina"));
-            stanistechoiceBox.getItems().add(Staniste.valueOf("Suma"));
-            stanistechoiceBox.getItems().add(Staniste.valueOf("Mocvara"));
-            stanistechoiceBox.getItems().add(Staniste.valueOf("VodenaStanista"));
             stanistechoiceBox.setValue(stari.getStaniste());
 
             tezinaTextfield.setText(String.valueOf(stari.getTezina()));
@@ -85,7 +77,7 @@ public class EditPticaController {
 
         } catch (NumberFormatException e) {
             upozorenje("nepotpun unos");
-            System.out.println("nepotpun unos");;
+            System.out.println("nepotpun unos");
         } catch (NepotpunUnosException e ) {
             throw new RuntimeException(e);
         }

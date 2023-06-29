@@ -57,9 +57,7 @@ public class EditRibaController {
 
         }
 
-        prehranachoiceBox.getItems().add(Prehrana.valueOf("Biljojed"));
-        prehranachoiceBox.getItems().add(Prehrana.valueOf("Mesojed"));
-        prehranachoiceBox.getItems().add(Prehrana.valueOf("Svejed"));
+
         prehranachoiceBox.setValue(Prehrana.Biljojed);
 
         stanistechoiceBox.getItems().add(Staniste.valueOf("Grad"));
@@ -94,7 +92,7 @@ public class EditRibaController {
 
         } catch (NumberFormatException e) {
             upozorenje("nepotpun unos");
-            System.out.println("nepotpun unos kod edita");;
+            System.out.println("nepotpun unos kod edita");
         } catch (NepotpunUnosException e ) {
             throw new RuntimeException(e);
         }
