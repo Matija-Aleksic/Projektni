@@ -45,14 +45,14 @@ public class HelloApplication extends Application {
                 new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        Platform.runLater(new SaveThread("a"));
+                        Platform.runLater(new SaveThread());
                         Platform.runLater(new Ucitajtthread());
                     }
                 }));
         loop.setCycleCount(Timeline.INDEFINITE);
         loop.play();
 
-        SaveThread a = new SaveThread("save");
+        SaveThread a = new SaveThread();
         Ucitajtthread b = new Ucitajtthread();
 
         ExecutorService executorService = Executors.newCachedThreadPool();
