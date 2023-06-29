@@ -1,5 +1,7 @@
 package com.example.projektni;
+
 import java.util.List;
+
 import datoteke.Promjene;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

@@ -22,10 +22,14 @@ public class EditRibaController {
 
     @FXML
     private TextField imeTextfield;
-    @FXML private ChoiceBox<Prehrana> prehranachoiceBox;
-    @FXML private ChoiceBox<Staniste> stanistechoiceBox;
-    @FXML private TextField tezinaTextfield;
-    @FXML private ChoiceBox<Voda> vodaChoiceBox;
+    @FXML
+    private ChoiceBox<Prehrana> prehranachoiceBox;
+    @FXML
+    private ChoiceBox<Staniste> stanistechoiceBox;
+    @FXML
+    private TextField tezinaTextfield;
+    @FXML
+    private ChoiceBox<Voda> vodaChoiceBox;
 
     private String ime1;
     private Voda voda1;
@@ -33,7 +37,7 @@ public class EditRibaController {
     private Prehrana hrana1;
     private Staniste staniste1;
 
-    public void initialize(){
+    public void initialize() {
         if (Optional.ofNullable(stari).isPresent()) {
             imeTextfield.setText(stari.getIme());
 
@@ -52,7 +56,6 @@ public class EditRibaController {
             stanistechoiceBox.setValue(stari.getStaniste());
 
             tezinaTextfield.setText(String.valueOf(stari.getTezina()));
-
 
 
         }
@@ -79,35 +82,37 @@ public class EditRibaController {
 
 
         try {
-            ime1=imeTextfield.getText();
-            voda1= (vodaChoiceBox.getValue());
-            tezina1=Float.parseFloat(tezinaTextfield.getText());
-            hrana1=prehranachoiceBox.getValue();
-            staniste1=stanistechoiceBox.getValue();
-            if (ime1.isEmpty() ||tezinaTextfield.getText().isEmpty()){
+            ime1 = imeTextfield.getText();
+            voda1 = (vodaChoiceBox.getValue());
+            tezina1 = Float.parseFloat(tezinaTextfield.getText());
+            hrana1 = prehranachoiceBox.getValue();
+            staniste1 = stanistechoiceBox.getValue();
+            if (ime1.isEmpty() || tezinaTextfield.getText().isEmpty()) {
                 throw new NepotpunUnosException("nepotpun unos kod edita ribe");
-            }else {
-                novi= new Ribe(ime1,hrana1,staniste1,tezina1,voda1);
+            } else {
+                novi = new Ribe(ime1, hrana1, staniste1, tezina1, voda1);
             }
 
         } catch (NumberFormatException e) {
             upozorenje("nepotpun unos");
             System.out.println("nepotpun unos kod edita");
-        } catch (NepotpunUnosException e ) {
+        } catch (NepotpunUnosException e) {
             throw new RuntimeException(e);
         }
-        BazaPodataka.editRiba(stari,novi);
+        BazaPodataka.editRiba(stari, novi);
         ZapisPromjene.dodajPromjenu(
-                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"promjenjena riba "+stari.getIme() +" "+stari.getHrana() +" "+stari.getStaniste() +" "+stari.getTezina() +" " +stari.getVoda() +
-                        " u " +" "+ime1 +" "+hrana1 +" "+staniste1 +" "+tezina1 +" " +voda1)
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(), "promjenjena riba " + stari.getIme() + " " + stari.getHrana() + " " + stari.getStaniste() + " " + stari.getTezina() + " " + stari.getVoda() +
+                        " u " + " " + ime1 + " " + hrana1 + " " + staniste1 + " " + tezina1 + " " + voda1)
         );
         upozorenje("uspjesno");
 
     }
+
     public void nazad() throws IOException {
-        IzbornikController a= new IzbornikController();
+        IzbornikController a = new IzbornikController();
         a.pregledRibaScreen();
     }
+
     public void dodajNovu() throws SQLException, IOException {
 
         Ribe tempRiba = new Builder()
@@ -118,9 +123,9 @@ public class EditRibaController {
                 .withVoda(vodaChoiceBox.getValue())
                 .buildRiba();
         ZapisPromjene.dodajPromjenu(
-                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"Dodana nova riba "+imeTextfield.getText() +" "+prehranachoiceBox.getValue().toString()
-                        +" "+stanistechoiceBox.getValue().toString() +" "+tezinaTextfield.getText()
-                        +" " +vodaChoiceBox.getValue().toString())
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(), "Dodana nova riba " + imeTextfield.getText() + " " + prehranachoiceBox.getValue().toString()
+                        + " " + stanistechoiceBox.getValue().toString() + " " + tezinaTextfield.getText()
+                        + " " + vodaChoiceBox.getValue().toString())
         );
         BazaPodataka.dodajRibe(tempRiba);
 

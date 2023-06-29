@@ -22,10 +22,14 @@ public class EditPticaController {
 
     @FXML
     private TextField imeTextfield;
-    @FXML private ChoiceBox<Prehrana> prehranachoiceBox;
-    @FXML private ChoiceBox<Staniste> stanistechoiceBox;
-    @FXML private TextField tezinaTextfield;
-    @FXML private TextField rasponkrilaTextfield;
+    @FXML
+    private ChoiceBox<Prehrana> prehranachoiceBox;
+    @FXML
+    private ChoiceBox<Staniste> stanistechoiceBox;
+    @FXML
+    private TextField tezinaTextfield;
+    @FXML
+    private TextField rasponkrilaTextfield;
 
     private String ime1;
     private String rasponkrila1;
@@ -33,7 +37,7 @@ public class EditPticaController {
     private Prehrana hrana1;
     private Staniste staniste1;
 
-    public void initialize(){
+    public void initialize() {
         if (Optional.ofNullable(stari).isPresent()) {
             imeTextfield.setText(stari.getIme());
 
@@ -64,51 +68,51 @@ public class EditPticaController {
 
 
         try {
-            ime1=imeTextfield.getText();
-            rasponkrila1= (rasponkrilaTextfield.getText());
-            tezina1=Float.parseFloat(tezinaTextfield.getText());
-            hrana1=prehranachoiceBox.getValue();
-            staniste1=stanistechoiceBox.getValue();
-            if (ime1.isEmpty() ||tezinaTextfield.getText().isEmpty()){
+            ime1 = imeTextfield.getText();
+            rasponkrila1 = (rasponkrilaTextfield.getText());
+            tezina1 = Float.parseFloat(tezinaTextfield.getText());
+            hrana1 = prehranachoiceBox.getValue();
+            staniste1 = stanistechoiceBox.getValue();
+            if (ime1.isEmpty() || tezinaTextfield.getText().isEmpty()) {
                 throw new NepotpunUnosException("nepotpun unos kod edita ptica");
-            }else {
-                novi= new Ptice(ime1,hrana1,staniste1, (int) tezina1,rasponkrila1);
+            } else {
+                novi = new Ptice(ime1, hrana1, staniste1, (int) tezina1, rasponkrila1);
             }
 
         } catch (NumberFormatException e) {
             upozorenje("nepotpun unos");
             System.out.println("nepotpun unos");
-        } catch (NepotpunUnosException e ) {
+        } catch (NepotpunUnosException e) {
             throw new RuntimeException(e);
         }
-        BazaPodataka.editPtica(stari,novi);
+        BazaPodataka.editPtica(stari, novi);
         ZapisPromjene.dodajPromjenu(
-                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"promjenjena ptica "+stari.getIme() +" "+stari.getHrana() +" "+stari.getStaniste() +" "+stari.getTezina() +" " +stari.getSirinaKrila() +
-                        " u" +" "+ime1 +" "+hrana1 +" "+staniste1 +" "+tezina1 +" " +rasponkrila1)
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(), "promjenjena ptica " + stari.getIme() + " " + stari.getHrana() + " " + stari.getStaniste() + " " + stari.getTezina() + " " + stari.getSirinaKrila() +
+                        " u" + " " + ime1 + " " + hrana1 + " " + staniste1 + " " + tezina1 + " " + rasponkrila1)
         );
         upozorenje("uspjesno");
 
 
-
     }
+
     public void nazad() throws IOException {
-        IzbornikController a= new IzbornikController();
+        IzbornikController a = new IzbornikController();
         a.pregledPticaScreen();
     }
 
     public void dodajNovu() throws SQLException, IOException {
 
         Ptice tempPtica = new Builder()
-        .withIme(imeTextfield.getText())
-        .withPrehrana(prehranachoiceBox.getValue())
-        .withStaniste(stanistechoiceBox.getValue())
-        .withTezina(Float.parseFloat(tezinaTextfield.getText()))
-        .withSirinaKrila(rasponkrilaTextfield.getText().toString())
-        .buildPtica();
+                .withIme(imeTextfield.getText())
+                .withPrehrana(prehranachoiceBox.getValue())
+                .withStaniste(stanistechoiceBox.getValue())
+                .withTezina(Float.parseFloat(tezinaTextfield.getText()))
+                .withSirinaKrila(rasponkrilaTextfield.getText().toString())
+                .buildPtica();
         ZapisPromjene.dodajPromjenu(
-                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(),"Dodana nova ptica "+imeTextfield.getText() +" "+prehranachoiceBox.getValue().toString() +
-                                                                                                    " "+stanistechoiceBox.getValue().toString() +" "+tezinaTextfield.getText()
-                                                                                                    +" " +rasponkrilaTextfield.getText().toString())
+                new Promjene(BazaPodataka.trenutniUser, LocalDateTime.now(), "Dodana nova ptica " + imeTextfield.getText() + " " + prehranachoiceBox.getValue().toString() +
+                        " " + stanistechoiceBox.getValue().toString() + " " + tezinaTextfield.getText()
+                        + " " + rasponkrilaTextfield.getText().toString())
         );
         BazaPodataka.dodajPtice(tempPtica);
         System.out.println("zapis u file");

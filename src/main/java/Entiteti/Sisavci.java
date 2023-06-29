@@ -1,6 +1,6 @@
 package Entiteti;
 
-public class Sisavci extends Zivotinja{
+public class Sisavci extends Zivotinja {
 
     String ime;
     Prehrana hrana;
@@ -20,11 +20,13 @@ public class Sisavci extends Zivotinja{
     public String getBojaKrzna() {
         return bojaKrzna;
     }
+
     public void setBojaKrzna(String bojaKrzna) {
         this.bojaKrzna = bojaKrzna;
     }
+
     Sisavci(Builder builder) {
-        super(builder.ime, builder.hrana,builder.staniste,builder.tezina);
+        super(builder.ime, builder.hrana, builder.staniste, builder.tezina);
         this.bojaKrzna = builder.bojaKrzna;
     }
 

@@ -23,7 +23,8 @@ import static com.example.projektni.PrikazPromjenaController.promjenes;
 import static datoteke.ZapisPromjene.loadChangeLogs;
 
 public class HelloApplication extends Application {
-private static Stage mainStage;
+    private static Stage mainStage;
+
     @Override
     public void start(Stage stage) throws IOException {
         mainStage = stage;
@@ -33,9 +34,11 @@ private static Stage mainStage;
         stage.setScene(scene);
         stage.show();
     }
-public static Stage getMainStage(){
-        return  mainStage;
-}
+
+    public static Stage getMainStage() {
+        return mainStage;
+    }
+
     public static void main(String[] args) {
 
         Timeline loop = new Timeline(
@@ -52,7 +55,7 @@ public static Stage getMainStage(){
         SaveThread a = new SaveThread("save");
         Ucitajtthread b = new Ucitajtthread();
 
-        ExecutorService executorService= Executors.newCachedThreadPool();
+        ExecutorService executorService = Executors.newCachedThreadPool();
         executorService.execute(b);
         executorService.execute(a);
         promjenes.addAll(loadChangeLogs());

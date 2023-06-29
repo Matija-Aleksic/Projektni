@@ -1,8 +1,9 @@
 package Iznimke;
 
-public class NijeMoguceSpajanjeNaBazuRuntimeException extends RuntimeException{
+public class NijeMoguceSpajanjeNaBazuRuntimeException extends RuntimeException {
     public NijeMoguceSpajanjeNaBazuRuntimeException() {
     }
+
     public NijeMoguceSpajanjeNaBazuRuntimeException(String message) {
         super(message);
     }

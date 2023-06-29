@@ -26,6 +26,7 @@ public class LoginFormController {
     private TextField password;
     @FXML
     private Button LoginButton;
+
     @FXML
     private void login() throws NepotpunUnosException, IOException, UserNepostojiexception {
         String ime = username.getText();

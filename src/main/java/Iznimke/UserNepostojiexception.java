@@ -1,8 +1,9 @@
 package Iznimke;
 
-public class UserNepostojiexception extends Exception{
+public class UserNepostojiexception extends Exception {
     public UserNepostojiexception() {
     }
+
     public UserNepostojiexception(String message) {
         super(message);
     }

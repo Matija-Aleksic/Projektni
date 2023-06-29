@@ -1,6 +1,7 @@
 package Entiteti;
+
 public class Ribe extends Zivotinja {
- Voda voda;
+    Voda voda;
 
     public Ribe(String ime, Prehrana hrana, Staniste staniste, float tezina, Voda voda) {
         super(ime, hrana, staniste, tezina);
@@ -10,8 +11,9 @@ public class Ribe extends Zivotinja {
     public Voda getVoda() {
         return voda;
     }
+
     Ribe(Builder builder) {
-        super(builder.ime, builder.hrana,builder.staniste,builder.tezina);
+        super(builder.ime, builder.hrana, builder.staniste, builder.tezina);
         this.voda = builder.voda;
     }
 }

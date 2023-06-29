@@ -14,6 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.sql.SQLException;
@@ -26,27 +27,41 @@ import java.util.concurrent.TimeUnit;
 import static com.example.projektni.LoginFormController.upozorenje;
 
 public class PretragaSisavacController {
-    @FXML private ChoiceBox<String> prehranachoiceBox;
-    @FXML private ChoiceBox<String> stanistechoiceBox;
-    @FXML private Button izmijeniButton;
-    @FXML private Button obrisiButton;
-    @FXML private   TableView<Sisavci> SisavciTableView;
-    @FXML private TableColumn<Sisavci,String> imeTableColumn;
-    @FXML private TableColumn<Sisavci,String> prehranaTableColumn;
-    @FXML private TableColumn<Sisavci,String> stanisteTableColumn;
-    @FXML private TableColumn<Sisavci,String> tezinaTableColumn;
-    @FXML private TableColumn<Sisavci,String> bojaKrznaTableColumn;
-    @FXML private TextField imeTextField;
-    @FXML private TextField tezinaTextField;
-    @FXML private TextField bojaKrznaTextField;
+    @FXML
+    private ChoiceBox<String> prehranachoiceBox;
+    @FXML
+    private ChoiceBox<String> stanistechoiceBox;
+    @FXML
+    private Button izmijeniButton;
+    @FXML
+    private Button obrisiButton;
+    @FXML
+    private TableView<Sisavci> SisavciTableView;
+    @FXML
+    private TableColumn<Sisavci, String> imeTableColumn;
+    @FXML
+    private TableColumn<Sisavci, String> prehranaTableColumn;
+    @FXML
+    private TableColumn<Sisavci, String> stanisteTableColumn;
+    @FXML
+    private TableColumn<Sisavci, String> tezinaTableColumn;
+    @FXML
+    private TableColumn<Sisavci, String> bojaKrznaTableColumn;
+    @FXML
+    private TextField imeTextField;
+    @FXML
+    private TextField tezinaTextField;
+    @FXML
+    private TextField bojaKrznaTextField;
     Alert ab = new Alert(Alert.AlertType.CONFIRMATION);
+
     public void initialize() throws SQLException, IOException {
         ab.setContentText("Jeste Li sigurni?");
         List<Sisavci> popis = new ArrayList<>();
-        popis=BazaPodataka.dohvatiSisavce("null",null,null,0,"null");
+        popis = BazaPodataka.dohvatiSisavce("null", null, null, 0, "null");
         imeTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIme()));
         popis.stream().sorted()
-                        .count();
+                .count();
         prehranaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getHrana().toString()));
         stanisteTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStaniste().toString()));
         tezinaTableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTezinaString()));
@@ -70,9 +85,10 @@ public class PretragaSisavacController {
         stanistechoiceBox.setValue("");
 
     }
+
     public void Obrisi() throws InterruptedException {
         ab.showAndWait();
-        if (ab.getResult()== ButtonType.OK) {
+        if (ab.getResult() == ButtonType.OK) {
 
             if (BazaPodataka.isAdmin == 1) {
 
@@ -105,42 +121,42 @@ public class PretragaSisavacController {
             } else {
                 upozorenje("nemate admin privilegije");
             }
-        }else {
-
-        }
-    }
-
-
-
-    public void Izmijeni() throws InterruptedException {
-        ab.showAndWait();
-        if (ab.getResult()== ButtonType.OK){
-        try {
-            if (BazaPodataka.isAdmin == 1) {
-                IzbornikController a = new IzbornikController();
-
-                if (SisavciTableView.getSelectionModel().isEmpty()) {
-                    a.editSisavacScreen();
-                } else {
-                    EditSisavacController.stari = SisavciTableView.getSelectionModel().getSelectedItem();
-                }
-                a.editSisavacScreen();
-            } else {
-                upozorenje("nemate admin privilegije");
-            }
-        } catch (IOException e) {
-            Log.error("file promblem kod brisanja");
-            throw new FileRuntimeException();
-        }
         } else {
 
         }
     }
+
+
+    public void Izmijeni() throws InterruptedException {
+        ab.showAndWait();
+        if (ab.getResult() == ButtonType.OK) {
+            try {
+                if (BazaPodataka.isAdmin == 1) {
+                    IzbornikController a = new IzbornikController();
+
+                    if (SisavciTableView.getSelectionModel().isEmpty()) {
+                        a.editSisavacScreen();
+                    } else {
+                        EditSisavacController.stari = SisavciTableView.getSelectionModel().getSelectedItem();
+                    }
+                    a.editSisavacScreen();
+                } else {
+                    upozorenje("nemate admin privilegije");
+                }
+            } catch (IOException e) {
+                Log.error("file promblem kod brisanja");
+                throw new FileRuntimeException();
+            }
+        } else {
+
+        }
+    }
+
     public void pretraga() throws SQLException, IOException {
         String ime;
-        String bojaKrzna="null";
+        String bojaKrzna = "null";
         Prehrana prehrana;
-        Staniste staniste= null;
+        Staniste staniste = null;
         if (!imeTextField.getText().isEmpty()) {
             ime = imeTextField.getText();
         } else {
@@ -154,19 +170,18 @@ public class PretragaSisavacController {
         if (!bojaKrznaTextField.getText().isEmpty()) {
             bojaKrzna = bojaKrznaTextField.getText();
         }
-        if (prehranachoiceBox.getValue()!="") {
+        if (prehranachoiceBox.getValue() != "") {
             prehrana = Prehrana.valueOf(prehranachoiceBox.getValue());
         } else {
             prehrana = null;
         }
-        if (stanistechoiceBox.getValue() !="") {
-            staniste= Staniste.valueOf(stanistechoiceBox.getValue());
+        if (stanistechoiceBox.getValue() != "") {
+            staniste = Staniste.valueOf(stanistechoiceBox.getValue());
         }
         List<Sisavci> temp = new ArrayList<>();
-        temp= BazaPodataka.dohvatiSisavce(ime,prehrana,staniste,tezina,bojaKrzna);
+        temp = BazaPodataka.dohvatiSisavce(ime, prehrana, staniste, tezina, bojaKrzna);
         SisavciTableView.setItems(FXCollections.observableList(temp));
     }
-
 
 
 }

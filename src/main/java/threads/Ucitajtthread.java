@@ -1,7 +1,8 @@
 package threads;
+
 import datoteke.ZapisPromjene;
 
-public class Ucitajtthread implements Runnable{
+public class Ucitajtthread implements Runnable {
     @Override
     public void run() {
         ZapisPromjene.loadChangeLogs();

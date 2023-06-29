@@ -15,8 +15,9 @@ public class IzbornikController {
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
         BazaPodataka.trenutniUser = null;
-        BazaPodataka.isAdmin=0;
+        BazaPodataka.isAdmin = 0;
     }
+
     public void pregledSisavacScreen() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PretragaSisavac.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
@@ -24,6 +25,7 @@ public class IzbornikController {
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
+
     public void editSisavacScreen() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("EditSisavac.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
@@ -39,6 +41,7 @@ public class IzbornikController {
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
+
     public void editPticaScreen() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("EditPtica.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
@@ -54,6 +57,7 @@ public class IzbornikController {
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
+
     public void editRibaScreen() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("EditRiba.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
@@ -61,6 +65,7 @@ public class IzbornikController {
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
+
     public void prikazPromjenaScreen() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PrikazPromjena.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);

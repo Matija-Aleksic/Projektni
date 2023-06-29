@@ -5,6 +5,7 @@ public abstract class Zivotinja {
     Prehrana hrana;
     Staniste staniste;
     float tezina;
+
     public Zivotinja(String ime, Prehrana hrana, Staniste staniste, float tezina) {
         this.ime = ime;
         this.hrana = hrana;
@@ -27,7 +28,8 @@ public abstract class Zivotinja {
     public float getTezina() {
         return tezina;
     }
-    public String getTezinaString(){
+
+    public String getTezinaString() {
         return String.valueOf(tezina);
     }
 }

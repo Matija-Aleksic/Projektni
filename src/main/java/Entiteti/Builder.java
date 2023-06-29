@@ -33,22 +33,26 @@ public class Builder {
         this.sirinaKrila = sirinaKrila;
         return this;
     }
-    public Builder withBojaKrzna(String krzno){
-        this.bojaKrzna=krzno;
+
+    public Builder withBojaKrzna(String krzno) {
+        this.bojaKrzna = krzno;
         return this;
     }
-    public Builder withVoda(Voda voda){
-        this.voda=voda;
+
+    public Builder withVoda(Voda voda) {
+        this.voda = voda;
         return this;
     }
 
     public Ptice buildPtica() {
         return new Ptice(this);
     }
-    public Sisavci buildSisavac(){
+
+    public Sisavci buildSisavac() {
         return new Sisavci(this);
     }
-    public Ribe buildRiba(){
+
+    public Ribe buildRiba() {
         return new Ribe(this);
     }
 

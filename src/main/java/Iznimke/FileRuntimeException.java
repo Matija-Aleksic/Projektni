@@ -1,6 +1,6 @@
 package Iznimke;
 
-public class FileRuntimeException extends RuntimeException{
+public class FileRuntimeException extends RuntimeException {
     public FileRuntimeException() {
     }
 

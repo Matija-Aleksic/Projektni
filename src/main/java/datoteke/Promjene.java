@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Promjene implements Serializable {
-   String user;
-   LocalDateTime vrijeme;
-   String sqlupit;
+    String user;
+    LocalDateTime vrijeme;
+    String sqlupit;
 
     public Promjene(String user, LocalDateTime vrijeme, String sqlupit) {
         this.user = user;
