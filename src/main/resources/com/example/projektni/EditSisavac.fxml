@@ -58,8 +58,8 @@
       <TextField fx:id="imeTextfield" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <TextField fx:id="tezinaTextfield" GridPane.columnIndex="2" GridPane.rowIndex="4" />
       <TextField fx:id="bojaKrznaTextfield" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-      <Button mnemonicParsing="false" onAction="#dodaj" text="Promijeni" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <Button mnemonicParsing="false" onAction="#dodaj" text="Promijeni" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#nazad" text="nazad" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-      <Button mnemonicParsing="false" onAction="#dodajNovu" text="Dodaj novog" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Button mnemonicParsing="false" onAction="#dodajNovu" text="Dodaj novog" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

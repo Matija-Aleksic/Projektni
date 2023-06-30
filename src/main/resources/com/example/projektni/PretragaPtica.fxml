@@ -38,12 +38,15 @@
             <TableColumn fx:id="rasponKrilaTableColumn" prefWidth="172.0" text="Raspon krila" />
         </columns>
     </TableView>
-    <Button fx:id="izmijeniButton" mnemonicParsing="false" onAction="#Izmijeni" text="Izmjeni ili dodaj odabranu zivotinju" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+    <Button fx:id="izmijeniButton" mnemonicParsing="false" onAction="#Izmijeni" text="Dodaj ili izmjeni odabranu zivotinju" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="13.0" />
          </GridPane.margin></Button>
     <Button fx:id="obrisiButton" mnemonicParsing="false" onAction="#Obrisi" text="obrisi odabranu zivotinju" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-    <Button mnemonicParsing="false" onAction="#pretraga" text="Pretrazi" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+    <Button mnemonicParsing="false" onAction="#pretraga" text="Pretrazi" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="13.0" />
+         </GridPane.margin></Button>
     <TextField fx:id="tezinaTextField" GridPane.columnIndex="4" GridPane.rowIndex="2">
         <GridPane.margin>
 
@@ -51,7 +54,10 @@
     <TextField fx:id="sirinakrilaTextField" GridPane.columnIndex="4" GridPane.rowIndex="3">
         <GridPane.margin>
 
-        </GridPane.margin></TextField>
+        </GridPane.margin>
+         <opaqueInsets>
+            <Insets right="10.0" />
+         </opaqueInsets></TextField>
     <Label text="prehrana" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
     <Label text="Staniste" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
     <Label text="Tezina" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />

@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="0.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projektni.IzbornikController">
    <children>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="631.0">
         <menus>
           <Menu mnemonicParsing="false" text="Pregled">
             <items>
